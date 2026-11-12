@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Toán lớp 4 · Phần 1</title>
+<style>
+:root{
+  --bg:#FFF8EC; --ink:#2B2D42; --muted:#6B6F80; --card:#FFFFFF;
+  --pri:#FF8A3D; --ok:#2EBD6B; --bad:#F2545B; --blue:#3A86FF; --purple:#8A5CF6; --yel:#FFC93C;
+  --r:22px; --sh:0 6px 0 rgba(0,0,0,.08), 0 10px 24px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  touch-action:manipulation;min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+button{font:inherit;color:inherit;border:0;cursor:pointer;touch-action:manipulation}
+input{font:inherit}
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:rgba(255,248,236,.94);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:2px solid #F3E6CF}
+.top .home{width:52px;height:52px;border-radius:16px;background:#fff;font-size:26px;box-shadow:var(--sh);flex:none}
+.top .ttl{flex:1;font-weight:800;font-size:20px;line-height:1.15;min-width:0}
+.top .ttl small{display:block;font-weight:600;font-size:13px;color:var(--muted)}
+.stars{background:#fff;border-radius:999px;padding:10px 14px;font-weight:800;font-size:19px;box-shadow:var(--sh);flex:none}
+.stars.bump{animation:bump .4s}
+@keyframes bump{50%{transform:scale(1.25)}}
+main{max-width:760px;margin:0 auto;padding:18px 16px 48px}
+.hero{background:linear-gradient(135deg,#3A86FF,#8A5CF6);color:#fff;border-radius:28px;padding:22px;box-shadow:var(--sh);text-align:center}
+.hero-e{font-size:50px}
+.hero h1{margin:6px 0 2px;font-size:28px}
+.hero p{margin:0 0 14px;font-weight:600;opacity:.95}
+.bar{height:14px;border-radius:99px;background:rgba(255,255,255,.35);overflow:hidden}
+.bar i{display:block;height:100%;background:#fff;border-radius:99px;transition:width .4s}
+.hero .pt{display:block;margin-top:6px;font-weight:700}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:18px}
+.mi{background:#fff;border-radius:var(--r);padding:16px 14px;text-align:left;box-shadow:var(--sh);display:flex;flex-direction:column;gap:4px;border-left:8px solid var(--c)}
+.mi:active,.btn:active,.dg:active,.chip:active{transform:translateY(3px)}
+.mi-e{font-size:36px}
+.mi b{font-size:20px}
+.mi small{color:var(--muted);font-size:14px;font-weight:600}
+.tip{margin-top:18px;background:#fff;border-radius:16px;padding:12px 14px;color:var(--muted);font-size:15px;font-weight:600;text-align:center}
+.row{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0}
+.btn{background:#fff;border-radius:18px;padding:13px 20px;font-size:18px;font-weight:800;box-shadow:var(--sh)}
+.btn.pri{background:var(--pri);color:#fff}
+.btn.ok{background:var(--ok);color:#fff}
+.btn.blue{background:var(--blue);color:#fff}
+.btn.yel{background:var(--yel)}
+.btn[disabled]{opacity:.4;cursor:default;transform:none}
+.card{background:#fff;border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-top:14px}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:800;color:var(--muted)}
+.tag{background:#EEF3FF;color:var(--blue);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:800}
+.qtext{font-size:22px;font-weight:700;line-height:1.5;margin:12px 0 4px}
+.ov{text-decoration:overline;text-decoration-thickness:2px;letter-spacing:1px;font-weight:800}
+.ov b{color:var(--bad)}
+.fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:.8em;line-height:1.05;margin:0 3px}
+.fr i{font-style:normal;font-weight:800}
+.fr i:first-child{border-bottom:2px solid currentColor;padding:0 3px}
+.ans{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.ans input{flex:1;min-width:150px;font-size:26px;font-weight:800;padding:12px 14px;border-radius:16px;border:3px solid #E7DCC6;background:#FFFDF8;color:var(--ink);text-align:center}
+.ans input:focus{outline:none;border-color:var(--blue)}
+.digits{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px;width:100%}
+.dg{background:#F4EEE2;border-radius:14px;padding:12px 0;font-size:24px;font-weight:800}
+.dg.on{background:var(--blue);color:#fff}
+.small{color:var(--muted);font-weight:600;font-size:15px;margin-top:6px}
+.fb{margin-top:12px;border-radius:16px;padding:12px 14px;font-weight:700;font-size:17px;display:none}
+.fb.show{display:block}
+.fb.good{background:#E6F8EE;color:#167A43}
+.fb.bad{background:#FDECEC;color:#B4232A}
+.fb.info{background:#FFF6DA;color:#7A5A00}
+.hints{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.hint{background:#FFF6DA;border-radius:14px;padding:10px 12px;font-weight:600;font-size:17px;line-height:1.45;border-left:6px solid var(--yel)}
+.hint b.n{color:#A07400}
+.sol{background:#EEF3FF;border-radius:14px;padding:12px 14px;margin-top:10px;font-size:17px;line-height:1.6;border-left:6px solid var(--blue)}
+.sol h4{margin:0 0 4px;color:var(--blue)}
+.dots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:6px}
+.dot{width:36px;height:36px;border-radius:12px;background:#fff;font-weight:800;font-size:15px;box-shadow:0 3px 0 rgba(0,0,0,.08)}
+.dot.cur{outline:3px solid var(--ink)}
+.dot.s-ok{background:var(--ok);color:#fff}
+.dot.s-okHint{background:#8EDCAE}
+.dot.s-sol{background:#C9D8FF}
+.dot.s-try{background:#FFE1A8}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:16px}
+.rule{background:#fff;border-radius:var(--r);padding:16px;box-shadow:var(--sh);margin-top:14px;border-top:8px solid var(--c)}
+.rule h3{margin:0 0 8px;font-size:20px}
+.rule p,.rule li{font-size:17px;line-height:1.55;margin:4px 0}
+.rule .ex{background:#F7F2E7;border-radius:12px;padding:8px 12px;margin-top:8px;font-size:16px}
+.nums{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.num{background:#fff;border-radius:14px;padding:8px 12px;font-weight:800;font-size:20px;box-shadow:0 3px 0 rgba(0,0,0,.08);text-align:center;min-width:72px}
+.num small{display:block;font-size:12px;color:var(--muted);font-weight:700}
+.crit{font-weight:800;font-size:18px;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#F4EEE2;border-radius:999px;padding:9px 14px;font-weight:800;font-size:17px}
+.chip.on{background:var(--blue);color:#fff}
+.chip.right{background:var(--ok);color:#fff}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:8px 6px;border-bottom:1px solid #EFE6D3;text-align:left}
+th{color:var(--muted)}
+.big{font-size:44px;text-align:center}
+.center{text-align:center}
+.pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
+noscript div{margin:20px;padding:16px;background:#FDECEC;border-radius:16px;font-weight:700}
+@media (max-width:420px){.qtext{font-size:20px}.top .ttl{font-size:18px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="home" id="homeBtn" aria-label="Về trang chính">🏠</button>
+  <div class="ttl" id="ttl">Toán lớp 4 · Phần 1<small>Bài khảo sát tháng 11 - thầy Khen</small></div>
+  <div class="stars" id="stars">⭐ 0</div>
+</header>
+<noscript><div>Trang này cần mở bằng trình duyệt (Safari, Chrome) để làm bài.</div></noscript>
+<main id="app"></main>
+
+<script>
+/* ====== DỮ LIỆU BÀI HỌC ====== */
+const FR = (a,b) => `<span class="fr"><i>${a}</i><i>${b}</i></span>`;
+const OV = s => `<span class="ov">${s.replace('*','<b>*</b>')}</span>`;
+
+const QS = [
+ {id:1, topic:'Chia hết', type:'digits', ans:[4],
+  q:`Cho số ${OV('7*358')} chia hết cho 9. Chữ số cần điền vào dấu * là:`,
+  hints:['Một số chia hết cho 9 khi <b>tổng các chữ số</b> của nó chia hết cho 9.',
+         'Cộng các chữ số đã biết: 7 + 3 + 5 + 8 = ?',
+         '7 + 3 + 5 + 8 = 23. Số chia hết cho 9 ngay sau 23 là 27. Vậy * = 27 - 23.'],
+  sol:`Tổng các chữ số đã biết: 7 + 3 + 5 + 8 = 23.<br>Cần 23 + * chia hết cho 9 → 23 + * = 27 → * = 4.<br>Thử lại: 74358 có 7 + 4 + 3 + 5 + 8 = 27, chia hết cho 9. <b>Đáp số: 4</b>`},
+ {id:2, topic:'Chia hết', type:'digits', ans:[7],
+  q:`Cho số ${OV('13*75')} chia 9 dư 5. Chữ số cần điền vào dấu * là:`,
+  hints:['Một số chia 9 dư bao nhiêu thì <b>tổng các chữ số</b> của nó chia 9 cũng dư bấy nhiêu.',
+         '1 + 3 + 7 + 5 = 16. Cần 16 + * chia 9 dư 5.',
+         'Các số chia 9 dư 5 là: 5, 14, 23, 32… Số nào nằm trong khoảng từ 16 đến 25?'],
+  sol:`1 + 3 + 7 + 5 = 16. Vì * là chữ số (0 đến 9) nên 16 + * nằm từ 16 đến 25.<br>Trong khoảng đó chỉ có 23 chia 9 dư 5 → * = 23 - 16 = 7.<br>Thử lại: 13775 có tổng chữ số 23, 23 : 9 = 2 dư 5. <b>Đáp số: 7</b>`},
+ {id:3, topic:'Chia hết', type:'digits', ans:[1,4,7],
+  q:`Cho số ${OV('75*')} chia cho 3 dư 1. Chữ số cần điền vào dấu * là:`,
+  hints:['Một số chia 3 dư bao nhiêu thì <b>tổng các chữ số</b> chia 3 cũng dư bấy nhiêu.',
+         '7 + 5 = 12, mà 12 chia hết cho 3. Vậy chỉ cần * chia 3 dư 1.',
+         'Từ 0 đến 9, những chữ số nào chia 3 dư 1? Bài này có <b>nhiều hơn một</b> đáp án.'],
+  sol:`7 + 5 = 12 chia hết cho 3, nên * phải chia 3 dư 1.<br>Các chữ số chia 3 dư 1: 1, 4, 7 (vì 1 = 0×3+1; 4 = 1×3+1; 7 = 2×3+1).<br>Thử lại: 751, 754, 757 đều chia 3 dư 1. <b>Đáp số: 1; 4; 7</b>`},
+ {id:4, topic:'Chia hết', type:'digits', ans:[9],
+  q:`Số chia cho 2 dư 1 và chia cho 5 dư 4 có chữ số hàng đơn vị là:`,
+  hints:['Chia 2 dư 1 nghĩa là số lẻ → hàng đơn vị là 1, 3, 5, 7 hoặc 9.',
+         'Chia 5 dư 4 → hàng đơn vị là 4 hoặc 9 (vì số chia hết cho 5 tận cùng 0 hoặc 5, cộng thêm 4).',
+         'Chữ số nào có mặt ở <b>cả hai</b> nhóm trên?'],
+  sol:`Chia 2 dư 1 → tận cùng 1, 3, 5, 7, 9.<br>Chia 5 dư 4 → tận cùng 4 hoặc 9.<br>Chữ số chung là 9. Ví dụ: 19, 29, 109. <b>Đáp số: 9</b>`},
+ {id:5, topic:'Tổng thay đổi', type:'num', ans:30229,
+  q:`Tổng hai số là 30215. Nếu thêm vào số lớn 49 đơn vị và bớt ở số bé đi 35 đơn vị thì tổng mới là:`,
+  hints:['Thêm vào một số hạng bao nhiêu thì tổng <b>tăng</b> bấy nhiêu. Bớt ở một số hạng bao nhiêu thì tổng <b>giảm</b> bấy nhiêu.',
+         'Tổng mới = 30215 + 49 - 35.',
+         '49 - 35 = 14. Vậy tổng tăng thêm 14 đơn vị.'],
+  sol:`Tổng tăng 49 rồi giảm 35, tức là tăng 49 - 35 = 14.<br>Tổng mới: 30215 + 14 = 30229. <b>Đáp số: 30229</b>`},
+ {id:6, topic:'Phép tính', type:'num', ans:135699,
+  q:`78910 + 56789 = ?`,
+  hints:['Đặt tính thẳng cột, cộng từ phải sang trái. Tổng một hàng từ 10 trở lên thì viết hàng đơn vị, nhớ 1 sang hàng bên trái.',
+         'Hàng đơn vị: 0 + 9 = 9. Hàng chục: 1 + 8 = 9. Hàng trăm: 9 + 7 = 16, viết 6 nhớ 1.',
+         'Ước lượng: khoảng 79000 + 57000 = 136000. Kết quả phải gần số này.'],
+  sol:`&nbsp;&nbsp;78910<br>+ 56789<br>= 135699<br>Hàng nghìn: 8 + 6 + 1 (nhớ) = 15, viết 5 nhớ 1. Hàng chục nghìn: 7 + 5 + 1 = 13. <b>Đáp số: 135699</b>`},
+ {id:7, topic:'Phép tính', type:'num', ans:22121,
+  q:`78910 - 56789 = ?`,
+  hints:['Đặt tính thẳng cột, trừ từ phải sang trái. Số trên nhỏ hơn số dưới thì mượn 10, rồi trả 1 ở hàng bên trái.',
+         'Hàng đơn vị: 0 không trừ được 9 → 10 - 9 = 1, nhớ 1. Hàng chục: 8 + 1 = 9, 1 không trừ được 9 → 11 - 9 = 2, nhớ 1.',
+         'Thử lại bằng phép cộng: kết quả + 56789 phải bằng 78910.'],
+  sol:`&nbsp;&nbsp;78910<br>- 56789<br>= 22121<br>Thử lại: 22121 + 56789 = 78910 ✓. <b>Đáp số: 22121</b>`},
+ {id:8, topic:'Phép tính', type:'num', ans:696210,
+  q:`2018 × 345 = ?`,
+  hints:['Tách 345 = 300 + 40 + 5, nhân 2018 với từng phần.',
+         '2018 × 300 = 605400 ; 2018 × 40 = 80720 ; 2018 × 5 = 10090.',
+         'Cộng 3 kết quả: 605400 + 80720 + 10090.'],
+  sol:`2018 × 5 = 10090<br>2018 × 40 = 80720<br>2018 × 300 = 605400<br>Cộng lại: 10090 + 80720 + 605400 = 696210. <b>Đáp số: 696210</b>`},
+ {id:9, topic:'Phép tính', type:'num', ans:25,
+  q:`3075 : 123 = ?`,
+  hints:['Ước lượng: 123 gần 120, 3075 gần 3000. 3000 : 120 khoảng bao nhiêu?',
+         'Thử nhân: 123 × 20 = 2460, còn thiếu 3075 - 2460 = 615.',
+         '615 : 123 = ? (gợi ý: 123 × 5 = 615).'],
+  sol:`307 : 123 được 2, 2 × 123 = 246, 307 - 246 = 61.<br>Hạ 5 được 615 : 123 được 5, 5 × 123 = 615, dư 0.<br>Thử lại: 123 × 25 = 3075 ✓. <b>Đáp số: 25</b>`},
+ {id:10, topic:'Đếm số', type:'num', ans:90,
+  q:`Có bao nhiêu số có 3 chữ số mà chữ số hàng đơn vị là 6?`,
+  hints:['Số có 3 chữ số có dạng: hàng trăm - hàng chục - hàng đơn vị. Hàng đơn vị đã cố định là 6.',
+         'Hàng trăm có thể là 1, 2, …, 9 (không được là 0). Có mấy cách? Hàng chục có thể là 0, 1, …, 9. Có mấy cách?',
+         'Hàng trăm 9 cách, hàng chục 10 cách. Mỗi cách chọn hàng trăm ghép được với 10 cách chọn hàng chục.'],
+  sol:`Hàng trăm: 9 cách (1 đến 9). Hàng chục: 10 cách (0 đến 9). Hàng đơn vị: 1 cách (là 6).<br>Số các số: 9 × 10 = 90. (Đó là 106, 116, …, 996.) <b>Đáp số: 90</b>`},
+ {id:11, topic:'Dãy số', type:'num', ans:145,
+  q:`Tính tổng của dãy số cách đều: 1 + 4 + 7 + 10 + … + 25 + 28`,
+  hints:['Khoảng cách giữa hai số liền nhau: 4 - 1 = 3.',
+         'Số số hạng = (số cuối - số đầu) : khoảng cách + 1 = (28 - 1) : 3 + 1.',
+         'Có 10 số hạng. Tổng = (số đầu + số cuối) × số số hạng : 2.'],
+  sol:`Số số hạng: (28 - 1) : 3 + 1 = 10.<br>Tổng: (1 + 28) × 10 : 2 = 29 × 5 = 145. <b>Đáp số: 145</b>`},
+ {id:12, topic:'Dãy số', type:'num', ans:33,
+  q:`Từ 1 đến 100 có bao nhiêu số chia hết cho 3?`,
+  hints:['Các số chia hết cho 3 là: 3, 6, 9, …, 99.',
+         'Đây là dãy cách đều 3. Số số hạng = (99 - 3) : 3 + 1.',
+         'Cách nhanh: 100 : 3 = 33 dư 1. Thương chính là số các số chia hết cho 3.'],
+  sol:`Các số chia hết cho 3 từ 1 đến 100: 3, 6, …, 99.<br>Số số hạng: (99 - 3) : 3 + 1 = 33. <b>Đáp số: 33</b>`},
+ {id:13, topic:'Tổng - tỉ', type:'num', ans:208,
+  q:`Tổng hai số là 234, biết số bé bằng ${FR(1,8)} số lớn. Tìm số lớn.`,
+  hints:['Vẽ sơ đồ: số bé là 1 phần, số lớn là 8 phần như thế.',
+         'Tổng số phần bằng nhau: 1 + 8 = 9 phần.',
+         'Giá trị 1 phần: 234 : 9 = 26. Số lớn có 8 phần.'],
+  sol:`Coi số bé là 1 phần thì số lớn là 8 phần.<br>Tổng số phần: 1 + 8 = 9 (phần).<br>Số lớn: 234 : 9 × 8 = 208.<br>Thử lại: số bé 26, 26 + 208 = 234 ✓. <b>Đáp số: 208</b>`},
+ {id:14, topic:'Tính nhanh', type:'num', ans:20270,
+  q:`Tính bằng cách thuận tiện: 2027 × 3 + 2027 × 6 + 2027`,
+  hints:['Để ý: số 2027 xuất hiện ở cả 3 số hạng. Số cuối 2027 = 2027 × 1.',
+         'a × b + a × c + a × d = a × (b + c + d). Vậy biểu thức = 2027 × (3 + 6 + 1).',
+         '3 + 6 + 1 = 10. Nhân một số với 10 thì viết thêm một chữ số 0.'],
+  sol:`2027 × 3 + 2027 × 6 + 2027 × 1<br>= 2027 × (3 + 6 + 1)<br>= 2027 × 10 = 20270. <b>Đáp số: 20270</b>`},
+];
+
+const P2_NUMS = [246, 6354, 7290, 4852, 4851, 2019, 1899];
+const P2 = [
+ {id:'a', label:'Các số chia hết cho 2', f:n=>n%2===0, rule:'Chia hết cho 2: chữ số tận cùng là 0, 2, 4, 6, 8.'},
+ {id:'b', label:'Số chia hết cho 5', f:n=>n%5===0, rule:'Chia hết cho 5: chữ số tận cùng là 0 hoặc 5.'},
+ {id:'c', label:'Các số chia hết cho 6', f:n=>n%6===0, rule:'Chia hết cho 6 = chia hết cho cả 2 và 3: số chẵn và tổng các chữ số chia hết cho 3.'},
+ {id:'d', label:'Số chia hết cho 10', f:n=>n%10===0, rule:'Chia hết cho 10: chữ số tận cùng là 0.'},
+ {id:'e', label:'Các số chia hết cho 3 mà không chia hết cho 9', f:n=>n%3===0&&n%9!==0, rule:'Tổng các chữ số chia hết cho 3 nhưng KHÔNG chia hết cho 9 (ví dụ tổng là 12, 15, 21).'},
+ {id:'f', label:'Các số chia hết cho 9', f:n=>n%9===0, rule:'Chia hết cho 9: tổng các chữ số chia hết cho 9.'},
+];
+
+const RULES = [
+ {c:'#3A86FF', t:'➗ Chia hết cho 2, 5, 10', html:`<ul><li><b>2:</b> tận cùng 0, 2, 4, 6, 8 (số chẵn).</li><li><b>5:</b> tận cùng 0 hoặc 5.</li><li><b>10:</b> tận cùng 0 (chia hết cho cả 2 và 5).</li></ul><div class="ex">Số lẻ chia 2 dư 1. Số tận cùng 4 hoặc 9 thì chia 5 dư 4.</div>`},
+ {c:'#8A5CF6', t:'🔢 Chia hết cho 3, 9, 6', html:`<ul><li><b>9:</b> tổng các chữ số chia hết cho 9.</li><li><b>3:</b> tổng các chữ số chia hết cho 3.</li><li><b>6:</b> vừa chia hết cho 2, vừa chia hết cho 3.</li><li>Số dư khi chia cho 3 (hoặc 9) <b>bằng</b> số dư của tổng các chữ số.</li></ul><div class="ex">4851: 4 + 8 + 5 + 1 = 18 → chia hết cho 9 và cho 3.<br>Chia hết cho 9 thì chắc chắn chia hết cho 3, nhưng ngược lại thì chưa chắc.</div>`},
+ {c:'#2EBD6B', t:'📏 Dãy số cách đều', html:`<p><b>Số số hạng</b> = (số cuối - số đầu) : khoảng cách + 1</p><p><b>Tổng</b> = (số đầu + số cuối) × số số hạng : 2</p><div class="ex">2 + 4 + 6 + 8 + 10: số số hạng (10 - 2) : 2 + 1 = 5; tổng (2 + 10) × 5 : 2 = 30.</div>`},
+ {c:'#FF8A3D', t:'📊 Tổng - tỉ (dùng sơ đồ)', html:`<ol><li>Vẽ sơ đồ: số bé mấy phần, số lớn mấy phần.</li><li>Tổng số phần bằng nhau.</li><li>Giá trị 1 phần = tổng : tổng số phần.</li><li>Số cần tìm = giá trị 1 phần × số phần của nó.</li></ol><div class="ex">Số bé bằng ${FR(1,3)} số lớn → bé 1 phần, lớn 3 phần, tổng 4 phần.</div>`},
+ {c:'#F2545B', t:'⚡ Tính nhanh', html:`<p>a × b + a × c = a × (b + c)</p><p>a × b - a × c = a × (b - c)</p><p>Số đứng một mình a = a × 1.</p><div class="ex">125 × 7 + 125 × 3 = 125 × 10 = 1250.</div>`},
+ {c:'#FFC93C', t:'🧮 Đếm số và tổng thay đổi', html:`<ul><li>Số có 3 chữ số: hàng trăm 9 cách (1-9), hàng chục 10 cách, hàng đơn vị 10 cách.</li><li>Từ 1 đến N có (N : k, bỏ phần dư) số chia hết cho k.</li><li>Thêm vào một số hạng bao nhiêu thì tổng tăng bấy nhiêu; bớt bao nhiêu thì tổng giảm bấy nhiêu.</li></ul>`},
+];
+/* ============================== */
+
+const KEY = 'ford_toan_p1_v1';
+let S = {q:{}, p2:{}, prac:{done:0, ok:0}};
+try { const v = JSON.parse(localStorage.getItem(KEY)); if (v && v.q) S = Object.assign(S, v); } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const rnd = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pickOne = a => a[Math.floor(Math.random()*a.length)];
+const fmt = n => String(n);
+
+function starCount(){
+  let n = 0;
+  for (const k in S.q) if (S.q[k].st === 'ok' || S.q[k].st === 'okHint') n++;
+  for (const k in S.p2) if (S.p2[k].ok) n++;
+  return n + (S.prac.ok || 0);
+}
+function refreshStars(bump){
+  const el = $('#stars'); el.textContent = '⭐ ' + starCount();
+  if (bump){ el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+}
+function setTitle(t, s){ $('#ttl').innerHTML = `${t}<small>${s||'Bài khảo sát tháng 11 - thầy Khen'}</small>`; }
+function go(v, arg){ view = v; window.scrollTo(0,0); render(arg); }
+let view = 'home', qi = 0;
+$('#homeBtn').onclick = () => go('home');
+
+function render(arg){
+  refreshStars();
+  if (view === 'home') return home();
+  if (view === 'rules') return rules();
+  if (view === 'quiz') return quiz();
+  if (view === 'p2') return p2();
+  if (view === 'pracMenu') return pracMenu();
+  if (view === 'prac') return prac(arg);
+  if (view === 'score') return score();
+}
+
+function home(){
+  setTitle('Toán lớp 4 · Phần 1');
+  const done = QS.filter(q => S.q[q.id] && S.q[q.id].st && S.q[q.id].st !== 'try').length;
+  const p2done = P2.filter(c => S.p2[c.id] && S.p2[c.id].ok).length;
+  const total = QS.length + P2.length, d = done + p2done;
+  app.innerHTML = `
+  <div class="hero"><div class="hero-e">🧠</div><h1>Chào Ford!</h1>
+    <p>Tự làm trước, bí thì bấm Gợi ý nhé.</p>
+    <div class="bar"><i style="width:${Math.round(d/total*100)}%"></i></div>
+    <span class="pt">Đã xong ${d}/${total} câu</span></div>
+  <div class="menu">
+    <button class="mi" style="--c:#FFC93C" data-go="rules"><span class="mi-e">📌</span><b>Nhớ nhanh</b><small>Các quy tắc cần thuộc trước khi làm bài</small></button>
+    <button class="mi" style="--c:#3A86FF" data-go="quiz"><span class="mi-e">✏️</span><b>Bài I: 14 câu</b><small>Điền đáp số, có gợi ý từng bước</small></button>
+    <button class="mi" style="--c:#8A5CF6" data-go="p2"><span class="mi-e">🔍</span><b>Bài II: Chọn số</b><small>Chia hết cho 2, 3, 5, 6, 9, 10</small></button>
+    <button class="mi" style="--c:#2EBD6B" data-go="pracMenu"><span class="mi-e">🎯</span><b>Luyện thêm</b><small>Câu tương tự, số mới mỗi lần</small></button>
+    <button class="mi" style="--c:#F2545B" data-go="score"><span class="mi-e">📋</span><b>Bảng điểm</b><small>Cho bố mẹ xem kết quả</small></button>
+  </div>
+  <div class="tip">💡 Cách học: đọc kỹ đề → tự làm ra nháp → nhập đáp số. Sai thì thử lại, rồi mới dùng Gợi ý. Lời giải để cuối cùng.</div>
+  <div class="row"><a class="btn" style="text-decoration:none" href="index.html">📚 Các bài Toán khác</a><a class="btn" style="text-decoration:none" href="../index.html">🏡 Trang chủ</a></div>`;
+  app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
+}
+
+function rules(){
+  setTitle('📌 Nhớ nhanh', 'Đọc to từng quy tắc 2 lần');
+  app.innerHTML = RULES.map(r => `<div class="rule" style="--c:${r.c}"><h3>${r.t}</h3>${r.html}</div>`).join('') +
+    `<div class="row"><button class="btn pri" id="toQuiz">Bắt đầu làm bài ✏️</button></div>`;
+  $('#toQuiz').onclick = () => go('quiz');
+}
+
+/* ---------- Khung câu hỏi dùng chung (bài thầy Khen + luyện thêm) ---------- */
+function mountQuestion(box, q, rec, opts){
+  // rec: {tries, hints, st, sel}
+  const isDig = q.type === 'digits';
+  rec.sel = rec.sel || [];
+  box.innerHTML = `
+    <div class="qtext">${q.q}</div>
+    ${isDig ? `<div class="small">Bấm chọn chữ số. Nếu có nhiều đáp án thì chọn hết.</div><div class="digits">${[0,1,2,3,4,5,6,7,8,9].map(d=>`<button class="dg${rec.sel.includes(d)?' on':''}" data-d="${d}">${d}</button>`).join('')}</div>` : ''}
+    <div class="ans">
+      ${isDig ? '' : `<input id="inp" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Đáp số" value="${rec.last||''}">`}
+      <button class="btn ok" id="chk">Kiểm tra</button>
+    </div>
+    <div class="fb" id="fb"></div>
+    <div class="hints" id="hints"></div>
+    <div class="row">
+      <button class="btn yel" id="hintBtn">💡 Gợi ý</button>
+      <button class="btn" id="solBtn">📖 Xem lời giải</button>
+    </div>
+    <div id="solBox"></div>`;
+  const fb = box.querySelector('#fb'), hintsEl = box.querySelector('#hints'), solBox = box.querySelector('#solBox');
+  const hintBtn = box.querySelector('#hintBtn'), solBtn = box.querySelector('#solBtn');
+  const showFb = (cls, txt) => { fb.className = 'fb show ' + cls; fb.innerHTML = txt; };
+  function drawHints(){
+    hintsEl.innerHTML = q.hints.slice(0, rec.hints||0).map((h,i)=>`<div class="hint"><b class="n">Gợi ý ${i+1}:</b> ${h}</div>`).join('');
+    const left = q.hints.length - (rec.hints||0);
+    hintBtn.textContent = left > 0 ? `💡 Gợi ý ${(rec.hints||0)+1}/${q.hints.length}` : '💡 Hết gợi ý';
+    hintBtn.disabled = left <= 0 || rec.st === 'ok' || rec.st === 'okHint';
+    const canSol = (rec.tries||0) >= 2 || (rec.hints||0) >= q.hints.length || rec.st === 'ok' || rec.st === 'okHint' || rec.st === 'sol';
+    solBtn.disabled = !canSol;
+    solBtn.title = canSol ? '' : 'Thử ít nhất 2 lần hoặc dùng hết gợi ý';
+  }
+  function showSol(){ solBox.innerHTML = `<div class="sol"><h4>📖 Cách làm</h4>${q.sol}</div>`; }
+  drawHints();
+  if (rec.st === 'ok' || rec.st === 'okHint') { showFb('good', '✅ Con đã làm đúng câu này.'); showSol(); }
+  else if (rec.st === 'sol') showSol();
+
+  if (isDig) box.querySelectorAll('.dg').forEach(b => b.onclick = () => {
+    const d = +b.dataset.d; const i = rec.sel.indexOf(d);
+    if (i >= 0) rec.sel.splice(i,1); else rec.sel.push(d);
+    b.classList.toggle('on');
+  });
+  const inp = box.querySelector('#inp');
+  if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+
+  function check(){
+    let right = false, msg = '';
+    if (isDig){
+      if (!rec.sel.length) return showFb('info', 'Con chọn chữ số trước đã nhé.');
+      const want = [...q.ans].sort(), got = [...rec.sel].sort((a,b)=>a-b);
+      right = want.length === got.length && want.every((v,i)=>v===got[i]);
+      if (!right){
+        const miss = want.filter(v=>!got.includes(v)).length, wrong = got.filter(v=>!want.includes(v)).length;
+        msg = wrong ? `Có ${wrong} chữ số chọn chưa đúng.` : `Đúng rồi nhưng còn thiếu ${miss} chữ số nữa.`;
+      }
+    } else {
+      const raw = (inp.value||'').replace(/[\s.,]/g,'');
+      if (!raw) return showFb('info', 'Con nhập đáp số trước đã nhé.');
+      if (!/^\d+$/.test(raw)) return showFb('info', 'Chỉ nhập số thôi con nhé.');
+      rec.last = raw; right = +raw === q.ans;
+      if (!right) msg = 'Chưa đúng.';
+    }
+    rec.tries = (rec.tries||0) + 1;
+    if (right){
+      if (rec.st !== 'sol') rec.st = (rec.tries === 1 && !(rec.hints)) ? 'ok' : 'okHint';
+      showFb('good', rec.st === 'ok' ? '🎉 Giỏi quá! Đúng ngay lần đầu!' : rec.st === 'okHint' ? '🎉 Đúng rồi! Con đã tự sửa được.' : '✅ Đúng rồi. Lần sau con thử tự làm trước khi xem lời giải nhé.');
+      showSol(); refreshStars(true);
+    } else {
+      if (!rec.st) rec.st = 'try';
+      showFb('bad', `❌ ${msg} ${(rec.hints||0) < q.hints.length ? 'Con kiểm tra lại hoặc bấm 💡 Gợi ý.' : 'Đọc lại các gợi ý rồi thử lần nữa.'}`);
+    }
+    drawHints(); opts.onChange && opts.onChange(right);
+  }
+  box.querySelector('#chk').onclick = check;
+  hintBtn.onclick = () => { rec.hints = Math.min(q.hints.length, (rec.hints||0)+1); drawHints(); opts.onChange && opts.onChange(false); };
+  solBtn.onclick = () => {
+    if (solBtn.disabled) return;
+    if (rec.st !== 'ok' && rec.st !== 'okHint') rec.st = 'sol';
+    showSol(); drawHints(); opts.onChange && opts.onChange(false);
+  };
+}
+
+function quiz(){
+  setTitle('✏️ Bài I', 'Điền đáp số vào ô trống');
+  const q = QS[qi];
+  const rec = S.q[q.id] = S.q[q.id] || {};
+  app.innerHTML = `
+    <div class="dots">${QS.map((x,i)=>`<button class="dot ${S.q[x.id]&&S.q[x.id].st?'s-'+S.q[x.id].st:''} ${i===qi?'cur':''}" data-i="${i}">${i+1}</button>`).join('')}</div>
+    <div class="card">
+      <div class="qhead"><span>Câu ${q.id} / ${QS.length}</span><span class="tag">${q.topic}</span></div>
+      <div id="qbox"></div>
+    </div>
+    <div class="nav">
+      <button class="btn" id="prev" ${qi===0?'disabled':''}>⬅ Câu trước</button>
+      <button class="btn blue" id="next">${qi===QS.length-1?'Sang Bài II ➜':'Câu sau ➜'}</button>
+    </div>`;
+  mountQuestion($('#qbox'), q, rec, {onChange: () => {
+    save();
+    const d = app.querySelector(`.dot[data-i="${qi}"]`);
+    d.className = `dot ${rec.st?'s-'+rec.st:''} cur`;
+  }});
+  app.querySelectorAll('.dot').forEach(b => b.onclick = () => { qi = +b.dataset.i; go('quiz'); });
+  $('#prev').onclick = () => { if (qi>0){ qi--; go('quiz'); } };
+  $('#next').onclick = () => { if (qi < QS.length-1){ qi++; go('quiz'); } else go('p2'); };
+}
+
+const dsum = n => String(n).split('').reduce((a,c)=>a+ +c, 0);
+function p2(){
+  setTitle('🔍 Bài II', 'Chọn các số thích hợp');
+  S.p2.showSum = S.p2.showSum || false;
+  app.innerHTML = `
+    <div class="card"><div class="crit">Cho các số:</div>
+      <div class="nums">${P2_NUMS.map(n=>`<div class="num">${n}${S.p2.showSum?`<small>tổng chữ số: ${dsum(n)}</small>`:''}</div>`).join('')}</div>
+      <div class="row"><button class="btn yel" id="sumBtn">${S.p2.showSum?'🙈 Ẩn tổng chữ số':'💡 Hiện tổng các chữ số'}</button></div>
+      <div class="small center">Mẹo: con tự cộng tổng chữ số ra nháp trước, rồi bấm để so lại.</div>
+    </div>
+    ${P2.map(c=>{const r=S.p2[c.id]||{};return `
+    <div class="card" data-c="${c.id}"><div class="crit">${c.label}:</div>
+      <div class="chips">${P2_NUMS.map(n=>`<button class="chip ${r.ok&&c.f(n)?'right':(r.sel||[]).includes(n)?'on':''}" data-n="${n}">${n}</button>`).join('')}</div>
+      <div class="fb ${r.ok?'show good':''}">${r.ok?'✅ Đúng rồi!':''}</div>
+      <div class="hints"></div>
+      <div class="row"><button class="btn ok chk">Kiểm tra</button><button class="btn yel hb">💡 Nhắc quy tắc</button></div>
+    </div>`}).join('')}
+    <div class="row"><button class="btn blue" id="toPrac">Luyện thêm 🎯</button></div>`;
+  $('#sumBtn').onclick = () => { S.p2.showSum = !S.p2.showSum; save(); p2(); };
+  $('#toPrac').onclick = () => go('pracMenu');
+  app.querySelectorAll('[data-c]').forEach(card => {
+    const c = P2.find(x=>x.id===card.dataset.c);
+    const r = S.p2[c.id] = S.p2[c.id] || {sel:[], tries:0};
+    r.sel = r.sel || [];
+    const fb = card.querySelector('.fb');
+    card.querySelectorAll('.chip').forEach(b => b.onclick = () => {
+      if (r.ok) return;
+      const n = +b.dataset.n, i = r.sel.indexOf(n);
+      if (i>=0) r.sel.splice(i,1); else r.sel.push(n);
+      b.classList.toggle('on'); save();
+    });
+    card.querySelector('.hb').onclick = () => { card.querySelector('.hints').innerHTML = `<div class="hint">${c.rule}</div>`; r.hint = true; save(); };
+    card.querySelector('.chk').onclick = () => {
+      if (r.ok) return;
+      const want = P2_NUMS.filter(c.f);
+      if (!r.sel.length){ fb.className='fb show info'; fb.textContent='Con chọn số trước đã nhé.'; return; }
+      r.tries++;
+      const wrong = r.sel.filter(n=>!want.includes(n)).length, miss = want.filter(n=>!r.sel.includes(n)).length;
+      if (!wrong && !miss){
+        r.ok = true; fb.className='fb show good'; fb.textContent = r.tries===1 && !r.hint ? '🎉 Đúng ngay lần đầu!' : '🎉 Đúng rồi!';
+        card.querySelectorAll('.chip').forEach(b=>{ if (want.includes(+b.dataset.n)) b.className='chip right'; });
+        refreshStars(true);
+      } else {
+        fb.className='fb show bad';
+        fb.textContent = '❌ ' + [wrong?`Có ${wrong} số chọn sai.`:'', miss?`Còn thiếu ${miss} số.`:''].join(' ') + (r.tries>=2?' Bấm 💡 Nhắc quy tắc nhé.':'');
+      }
+      save();
+    };
+  });
+}
+
+/* ---------- LUYỆN THÊM: tạo câu mới ---------- */
+const GEN = {
+  div(){
+    const m = pickOne([3,9,9]); const rem = Math.random()<.6 ? 0 : rnd(1,m-1);
+    const len = rnd(3,5); const pos = rnd(1,len-1);
+    const ds = []; for (let i=0;i<len;i++) ds.push(i===0?rnd(1,9):rnd(0,9));
+    const known = ds.filter((_,i)=>i!==pos).reduce((a,b)=>a+b,0);
+    const ans = []; for (let d=0; d<=9; d++) if ((known+d)%m===rem) ans.push(d);
+    const s = ds.map((d,i)=>i===pos?'*':d).join('');
+    const knownTxt = ds.filter((_,i)=>i!==pos).join(' + ');
+    const cond = rem ? `chia ${m} dư ${rem}` : `chia hết cho ${m}`;
+    return {topic:'Chia hết', type:'digits', ans,
+      q:`Cho số ${OV(s)} ${rem?`chia cho ${m} dư ${rem}`:`chia hết cho ${m}`}. Chữ số cần điền vào dấu * là:`,
+      hints:[`Số dư khi chia cho ${m} bằng số dư của <b>tổng các chữ số</b> khi chia cho ${m}.`,
+             `Tổng các chữ số đã biết: ${knownTxt} = ${known}. Cần ${known} + * ${cond}.`,
+             `Thử lần lượt * = 0, 1, 2, … 9. Có thể có nhiều đáp án.`],
+      sol:`Tổng các chữ số đã biết là ${known}. ${ans.map(d=>`${known} + ${d} = ${known+d}`).join('; ')} đều ${cond}.<br><b>Đáp số: ${ans.join('; ')}</b>`};
+  },
+  div25(){
+    const a = rnd(0,1), b = rnd(0,4);
+    let u = 0; for (let d=0; d<=9; d++) if (d%2===a && d%5===b) u = d;
+    const t2 = a ? 'chia cho 2 dư 1' : 'chia hết cho 2', t5 = b ? `chia cho 5 dư ${b}` : 'chia hết cho 5';
+    const l2 = a ? '1, 3, 5, 7, 9' : '0, 2, 4, 6, 8', l5 = `${b} hoặc ${b+5}`;
+    return {topic:'Chia hết', type:'digits', ans:[u],
+      q:`Số ${t2} và ${t5} có chữ số hàng đơn vị là:`,
+      hints:[`${t2[0].toUpperCase()+t2.slice(1)} → hàng đơn vị là ${l2}.`, `${t5[0].toUpperCase()+t5.slice(1)} → hàng đơn vị là ${l5}.`, 'Tìm chữ số có mặt ở cả hai nhóm.'],
+      sol:`Nhóm 1: ${l2}. Nhóm 2: ${l5}. Chữ số chung: ${u}. <b>Đáp số: ${u}</b>`};
+  },
+  arith(){
+    const k = pickOne(['+','-','x',':']);
+    if (k === '+'){ const a=rnd(10000,89999), b=rnd(10000,99999-a+9999); return {topic:'Phép tính', type:'num', ans:a+b, q:`${a} + ${b} = ?`,
+      hints:['Đặt tính thẳng cột, cộng từ phải sang trái, nhớ 1 khi được 10 trở lên.', `Ước lượng: khoảng ${Math.round(a/1000)*1000} + ${Math.round(b/1000)*1000} = ${Math.round(a/1000)*1000+Math.round(b/1000)*1000}.`, 'Cộng xong, thử lại bằng phép trừ: tổng - số thứ hai = số thứ nhất.'],
+      sol:`${a} + ${b} = ${a+b}. <b>Đáp số: ${a+b}</b>`}; }
+    if (k === '-'){ const a=rnd(30000,99999), b=rnd(10000,a-1000); return {topic:'Phép tính', type:'num', ans:a-b, q:`${a} - ${b} = ?`,
+      hints:['Đặt tính, trừ từ phải sang trái. Không trừ được thì mượn 10 và nhớ 1 sang hàng bên trái.', `Ước lượng: khoảng ${Math.round(a/1000)*1000} - ${Math.round(b/1000)*1000}.`, `Thử lại: kết quả + ${b} phải bằng ${a}.`],
+      sol:`${a} - ${b} = ${a-b}. Thử lại: ${a-b} + ${b} = ${a} ✓. <b>Đáp số: ${a-b}</b>`}; }
+    if (k === 'x'){ const a=rnd(1001,4999), b=rnd(102,489); const h=Math.floor(b/100)*100, t=Math.floor(b%100/10)*10, u=b%10;
+      const parts=[[h,a*h],[t,a*t],[u,a*u]].filter(p=>p[0]);
+      return {topic:'Phép tính', type:'num', ans:a*b, q:`${a} × ${b} = ?`,
+      hints:[`Tách ${b} = ${parts.map(p=>p[0]).join(' + ')}.`, parts.map(p=>`${a} × ${p[0]} = ${p[1]}`).join(' ; '), 'Cộng các kết quả lại.'],
+      sol:`${parts.map(p=>`${a} × ${p[0]} = ${p[1]}`).join('<br>')}<br>Cộng lại: ${a*b}. <b>Đáp số: ${a*b}</b>`}; }
+    const d=rnd(102,299), qq=rnd(12,48), n=d*qq;
+    return {topic:'Phép tính', type:'num', ans:qq, q:`${n} : ${d} = ?`,
+      hints:[`Ước lượng: ${n} : ${Math.round(d/10)*10} khoảng bao nhiêu?`, `Thử nhân ngược: ${d} × ${Math.floor(qq/10)*10} = ${d*Math.floor(qq/10)*10}.`, `Còn lại ${n - d*Math.floor(qq/10)*10} : ${d} = ?`],
+      sol:`${d} × ${qq} = ${n} nên ${n} : ${d} = ${qq}. <b>Đáp số: ${qq}</b>`};
+  },
+  seq(){
+    const a=rnd(1,9), d=rnd(2,5), n=rnd(6,14), last=a+(n-1)*d, sum=(a+last)*n/2;
+    const askSum = Math.random()<.65;
+    if (!askSum){ const N=pickOne([50,60,90,100,120,150,200]), k=rnd(2,9);
+      return {topic:'Dãy số', type:'num', ans:Math.floor(N/k), q:`Từ 1 đến ${N} có bao nhiêu số chia hết cho ${k}?`,
+        hints:[`Các số chia hết cho ${k}: ${k}, ${2*k}, ${3*k}, …`, `${N} : ${k} = ${Math.floor(N/k)} dư ${N%k}.`, 'Thương (bỏ phần dư) chính là số các số cần đếm.'],
+        sol:`Số lớn nhất ≤ ${N} chia hết cho ${k} là ${Math.floor(N/k)*k}. Số số hạng: (${Math.floor(N/k)*k} - ${k}) : ${k} + 1 = ${Math.floor(N/k)}. <b>Đáp số: ${Math.floor(N/k)}</b>`}; }
+    return {topic:'Dãy số', type:'num', ans:sum,
+      q:`Tính tổng của dãy số cách đều: ${a} + ${a+d} + ${a+2*d} + ${a+3*d} + … + ${last-d} + ${last}`,
+      hints:[`Khoảng cách: ${a+d} - ${a} = ${d}.`, `Số số hạng = (${last} - ${a}) : ${d} + 1 = ${n}.`, `Tổng = (${a} + ${last}) × ${n} : 2.`],
+      sol:`Số số hạng: (${last} - ${a}) : ${d} + 1 = ${n}.<br>Tổng: (${a} + ${last}) × ${n} : 2 = ${sum}. <b>Đáp số: ${sum}</b>`};
+  },
+  ratio(){
+    const n=rnd(2,9), p=rnd(6,45), tot=(n+1)*p, big=Math.random()<.6;
+    return {topic:'Tổng - tỉ', type:'num', ans:big?n*p:p,
+      q:`Tổng hai số là ${tot}, biết số bé bằng ${FR(1,n)} số lớn. Tìm số ${big?'lớn':'bé'}.`,
+      hints:[`Vẽ sơ đồ: số bé 1 phần, số lớn ${n} phần.`, `Tổng số phần: 1 + ${n} = ${n+1} phần.`, `Giá trị 1 phần: ${tot} : ${n+1} = ${p}.`],
+      sol:`Tổng số phần: ${n+1}. Giá trị 1 phần: ${tot} : ${n+1} = ${p}.<br>Số bé: ${p}; số lớn: ${p} × ${n} = ${n*p}. <b>Đáp số: ${big?n*p:p}</b>`};
+  },
+  fast(){
+    const a=rnd(1001,9999), v=rnd(0,2);
+    if (v===0){ const b=rnd(2,7), c=9-b; return {topic:'Tính nhanh', type:'num', ans:a*10, q:`Tính bằng cách thuận tiện: ${a} × ${b} + ${a} × ${c} + ${a}`,
+      hints:[`${a} có mặt ở cả 3 số hạng. ${a} = ${a} × 1.`, `= ${a} × (${b} + ${c} + 1).`, `${b} + ${c} + 1 = 10.`], sol:`${a} × (${b} + ${c} + 1) = ${a} × 10 = ${a*10}. <b>Đáp số: ${a*10}</b>`}; }
+    if (v===1){ const b=rnd(11,89), c=100-b, x=rnd(12,99); return {topic:'Tính nhanh', type:'num', ans:x*100, q:`Tính bằng cách thuận tiện: ${x} × ${b} + ${x} × ${c}`,
+      hints:[`${x} có mặt ở cả 2 số hạng.`, `= ${x} × (${b} + ${c}).`, `${b} + ${c} = 100.`], sol:`${x} × (${b} + ${c}) = ${x} × 100 = ${x*100}. <b>Đáp số: ${x*100}</b>`}; }
+    const c=rnd(2,9), b=c+10, x=rnd(101,999); return {topic:'Tính nhanh', type:'num', ans:x*10, q:`Tính bằng cách thuận tiện: ${x} × ${b} - ${x} × ${c}`,
+      hints:[`${x} có mặt ở cả 2 số hạng.`, `= ${x} × (${b} - ${c}).`, `${b} - ${c} = 10.`], sol:`${x} × (${b} - ${c}) = ${x} × 10 = ${x*10}. <b>Đáp số: ${x*10}</b>`};
+  },
+  count(){
+    const v=rnd(0,4), k=rnd(1,9);
+    const V=[
+      [`Có bao nhiêu số có 3 chữ số mà chữ số hàng đơn vị là ${k}?`, 90, 'Hàng trăm 9 cách (1-9), hàng chục 10 cách (0-9), hàng đơn vị 1 cách.', '9 × 10 × 1 = 90'],
+      [`Có bao nhiêu số có 3 chữ số mà chữ số hàng trăm là ${k}?`, 100, 'Hàng trăm 1 cách, hàng chục 10 cách, hàng đơn vị 10 cách.', '1 × 10 × 10 = 100'],
+      [`Có bao nhiêu số chẵn có 3 chữ số?`, 450, 'Hàng trăm 9 cách, hàng chục 10 cách, hàng đơn vị 5 cách (0, 2, 4, 6, 8).', '9 × 10 × 5 = 450'],
+      [`Có bao nhiêu số lẻ có 3 chữ số?`, 450, 'Hàng trăm 9 cách, hàng chục 10 cách, hàng đơn vị 5 cách (1, 3, 5, 7, 9).', '9 × 10 × 5 = 450'],
+      [`Tổng hai số là ${k*1000+rnd(100,999)}. Nếu thêm vào số lớn ${rnd(20,90)} đơn vị và bớt ở số bé đi ${rnd(10,19)} đơn vị thì tổng mới là:`, null]];
+    if (v===4){
+      const m = V[4][0].match(/\d+/g).map(Number), t=m[0], x=m[1], y=m[2];
+      return {topic:'Tổng thay đổi', type:'num', ans:t+x-y, q:V[4][0],
+        hints:['Thêm vào một số hạng bao nhiêu thì tổng tăng bấy nhiêu; bớt bao nhiêu thì tổng giảm bấy nhiêu.', `Tổng mới = ${t} + ${x} - ${y}.`, `${x} - ${y} = ${x-y}.`],
+        sol:`Tổng tăng ${x} - ${y} = ${x-y}. Tổng mới: ${t} + ${x-y} = ${t+x-y}. <b>Đáp số: ${t+x-y}</b>`};
+    }
+    const r=V[v];
+    return {topic:'Đếm số', type:'num', ans:r[1], q:r[0],
+      hints:['Số có 3 chữ số có hàng trăm, hàng chục, hàng đơn vị. Hàng trăm không được là 0.', r[2], 'Nhân số cách chọn của các hàng với nhau.'],
+      sol:`${r[2]}<br>Số các số: ${r[3]}. <b>Đáp số: ${r[1]}</b>`};
+  },
+};
+const PTOPICS = [
+  ['mix','🎲','Trộn tất cả','#3A86FF'], ['div','🔢','Điền chữ số (chia hết)','#8A5CF6'], ['div25','➗','Hàng đơn vị (chia 2, 5)','#8A5CF6'],
+  ['arith','🧮','Cộng trừ nhân chia','#FF8A3D'], ['seq','📏','Dãy số cách đều','#2EBD6B'], ['ratio','📊','Tổng - tỉ','#F2545B'],
+  ['fast','⚡','Tính nhanh','#FFC93C'], ['count','🔍','Đếm số, tổng thay đổi','#6B6F80']];
+function pracMenu(){
+  setTitle('🎯 Luyện thêm', 'Mỗi lần 10 câu, số mới');
+  app.innerHTML = `<div class="tip">Chọn dạng bài con muốn luyện. Đã làm đúng: <b>${S.prac.ok||0}</b> câu.</div>
+    <div class="pick">${PTOPICS.map(t=>`<button class="mi" style="--c:${t[3]}" data-t="${t[0]}"><span class="mi-e">${t[1]}</span><b style="font-size:17px">${t[2]}</b></button>`).join('')}</div>`;
+  app.querySelectorAll('[data-t]').forEach(b => b.onclick = () => go('prac', {topic:b.dataset.t, i:0, ok:0}));
+}
+function prac(st){
+  const key = st.topic === 'mix' ? pickOne(Object.keys(GEN)) : st.topic;
+  const q = GEN[key](); const rec = {};
+  setTitle('🎯 Luyện thêm', PTOPICS.find(t=>t[0]===st.topic)[2]);
+  app.innerHTML = `
+    <div class="card"><div class="qhead"><span>Câu ${st.i+1} / 10</span><span class="tag">${q.topic}</span></div><div id="qbox"></div></div>
+    <div class="nav"><button class="btn" id="back">⬅ Chọn dạng</button><button class="btn blue" id="next">${st.i<9?'Câu mới ➜':'Xem kết quả'}</button></div>`;
+  let counted = false;
+  mountQuestion($('#qbox'), q, rec, {onChange: right => {
+    if (right && !counted){ counted = true; if (rec.st !== 'sol'){ st.ok++; S.prac.ok = (S.prac.ok||0)+1; } S.prac.done = (S.prac.done||0)+1; save(); refreshStars(true); }
+  }});
+  $('#back').onclick = () => go('pracMenu');
+  $('#next').onclick = () => {
+    if (st.i < 9) go('prac', {topic:st.topic, i:st.i+1, ok:st.ok});
+    else { setTitle('🎯 Kết quả'); app.innerHTML = `<div class="card center"><div class="big">${st.ok>=8?'🏆':st.ok>=5?'👍':'💪'}</div><h2>Đúng ${st.ok}/10 câu</h2><p class="small">${st.ok>=8?'Rất giỏi!':st.ok>=5?'Khá lắm, luyện thêm chút nữa nhé!':'Đọc lại Nhớ nhanh rồi luyện tiếp nhé!'}</p><div class="row"><button class="btn pri" id="again">Làm tiếp 10 câu</button><button class="btn" id="m">Chọn dạng khác</button></div></div>`;
+      $('#again').onclick = () => go('prac', {topic:st.topic, i:0, ok:0}); $('#m').onclick = () => go('pracMenu'); }
+  };
+}
+
+function score(){
+  setTitle('📋 Bảng điểm', 'Cho bố mẹ xem');
+  const L = {ok:'✅ Đúng ngay', okHint:'🟢 Đúng sau khi sửa', sol:'📖 Xem lời giải', try:'⏳ Đang làm'};
+  const cnt = k => QS.filter(q=>S.q[q.id]&&S.q[q.id].st===k).length;
+  app.innerHTML = `
+    <div class="card"><h3 style="margin-top:0">Bài I (14 câu)</h3>
+      <p class="small">Đúng ngay: <b>${cnt('ok')}</b> · Đúng sau khi sửa: <b>${cnt('okHint')}</b> · Xem lời giải: <b>${cnt('sol')}</b> · Chưa làm: <b>${QS.length-cnt('ok')-cnt('okHint')-cnt('sol')-cnt('try')}</b></p>
+      <table><tr><th>Câu</th><th>Dạng</th><th>Kết quả</th><th>Lần thử</th><th>Gợi ý</th></tr>
+      ${QS.map(q=>{const r=S.q[q.id]||{};return `<tr><td>${q.id}</td><td>${q.topic}</td><td>${L[r.st]||'-'}</td><td>${r.tries||0}</td><td>${r.hints||0}</td></tr>`}).join('')}</table></div>
+    <div class="card"><h3 style="margin-top:0">Bài II (6 ý)</h3>
+      <table><tr><th>Ý</th><th>Kết quả</th><th>Lần thử</th></tr>
+      ${P2.map(c=>{const r=S.p2[c.id]||{};return `<tr><td>${c.label}</td><td>${r.ok?'✅':(r.tries?'⏳':'-')}</td><td>${r.tries||0}</td></tr>`}).join('')}</table></div>
+    <div class="card"><h3 style="margin-top:0">Luyện thêm</h3><p class="small">Đã làm ${S.prac.done||0} câu, tự làm đúng ${S.prac.ok||0} câu.</p></div>
+    <div class="row"><button class="btn" id="reset">🔄 Làm lại từ đầu</button></div>`;
+  $('#reset').onclick = () => { if (confirm('Xoá hết kết quả để làm lại từ đầu?')){ S = {q:{}, p2:{}, prac:{done:0, ok:0}}; save(); go('home'); } };
+}
+
+render();
+</script>
+</body>
+</html>

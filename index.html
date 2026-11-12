@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ford học từ vựng</title>
+<title>Góc học của Ford</title>
 <style>
 :root{--bg:#FFF8EC;--ink:#2B2D42;--muted:#6B6F80;--sh:0 6px 0 rgba(0,0,0,.08),0 10px 24px rgba(0,0,0,.08)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -13,29 +13,55 @@ main{max-width:720px;margin:0 auto;padding:24px 16px 40px}
 .hero .e{font-size:56px}
 .hero h1{margin:6px 0 4px;font-size:30px}
 .hero p{margin:0;font-weight:600}
-h2{margin:24px 4px 10px;font-size:20px;color:var(--muted)}
-a.u{display:flex;align-items:center;gap:14px;background:#fff;border-radius:22px;padding:18px;margin-bottom:14px;text-decoration:none;color:inherit;box-shadow:var(--sh);border-left:8px solid var(--c)}
-a.u:active{transform:translateY(3px)}
-a.u .e{font-size:44px}
-a.u b{display:block;font-size:22px}
+.subj{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.subj a{background:#fff;border-radius:22px;padding:14px 10px;text-align:center;text-decoration:none;color:inherit;box-shadow:var(--sh);border-bottom:6px solid var(--c)}
+.subj a:active,a.u:active{transform:translateY(3px)}
+.subj .e{font-size:40px;display:block}
+.subj b{font-size:19px}
+h2{margin:26px 4px 10px;font-size:21px;display:flex;align-items:center;gap:8px;scroll-margin-top:12px}
+h3{margin:14px 4px 8px;font-size:16px;color:var(--muted)}
+a.u{display:flex;align-items:center;gap:14px;background:#fff;border-radius:22px;padding:16px;margin-bottom:12px;text-decoration:none;color:inherit;box-shadow:var(--sh);border-left:8px solid var(--c)}
+a.u .e{font-size:40px}
+a.u b{display:block;font-size:20px}
 a.u small{color:var(--muted);font-weight:600;font-size:15px}
-a.u .go{margin-left:auto;font-size:28px}
+a.u .go{margin-left:auto;font-size:26px}
 .new{background:#F2545B;color:#fff;border-radius:99px;padding:2px 10px;font-size:13px;font-weight:800;margin-left:6px;vertical-align:middle}
+.prog{display:block;height:8px;border-radius:99px;background:#F1E4CC;margin-top:6px;overflow:hidden;max-width:220px}
+.prog i{display:block;height:100%;background:#2EBD6B}
 </style>
 </head>
 <body>
 <main>
   <section class="hero">
     <div class="e">🦊📚</div>
-    <h1>Ford học từ vựng</h1>
-    <p>Chọn bài để học và chơi nhé! 🎮</p>
+    <h1>Góc học của Ford</h1>
+    <p>Chọn môn rồi chọn bài nhé! Bài có nhãn MỚI là bài cần làm.</p>
   </section>
 
-  <h2>Các bài học</h2>
-  <!-- Bài mới thêm lên đầu -->
+  <nav class="subj">
+    <a href="#tieng-anh" style="--c:#8A5CF6"><span class="e">📘</span><b>Tiếng Anh</b></a>
+    <a href="#toan" style="--c:#3A86FF"><span class="e">🧮</span><b>Toán</b></a>
+  </nav>
+
+  <!-- ===== TOÁN: bài mới thêm lên đầu ===== -->
+  <h2 id="toan">🧮 Toán</h2>
+  <h3>Thầy Khen - Tháng 11</h3>
+  <a class="u" style="--c:#3A86FF" href="toan/khen-t11-p1.html">
+    <span class="e">✏️</span>
+    <span><b>Khảo sát Phần 1 <span class="new">MỚI</span></b><small>Chia hết, phép tính, dãy số, tổng - tỉ</small><span class="prog"><i data-key="ford_toan_p1_v1" data-total="20" style="width:0"></i></span></span>
+    <span class="go">▶</span>
+  </a>
+  <a class="u" style="--c:#2EBD6B" href="toan/">
+    <span class="e">📂</span>
+    <span><b>Tất cả bài Toán</b><small>Mục lục theo tháng</small></span>
+    <span class="go">▶</span>
+  </a>
+
+  <!-- ===== TIẾNG ANH: bài mới thêm lên đầu ===== -->
+  <h2 id="tieng-anh">📘 Tiếng Anh · Từ vựng</h2>
   <a class="u" style="--c:#8A5CF6" href="unit-8.html">
     <span class="e">🎓</span>
-    <span><b>Unit 8 <span class="new">MỚI</span></b><small>29 từ cần thuộc + 24 từ tham khảo</small></span>
+    <span><b>Unit 8</b><small>29 từ cần thuộc + 24 từ tham khảo</small></span>
     <span class="go">▶</span>
   </a>
   <a class="u" style="--c:#2EBD6B" href="unit-7.html">
@@ -54,5 +80,17 @@ a.u .go{margin-left:auto;font-size:28px}
     <span class="go">▶</span>
   </a>
 </main>
+<script>
+// Thanh tiến độ bài Toán: đọc kết quả bé đã làm trên máy này
+document.querySelectorAll('.prog i[data-key]').forEach(el => {
+  try {
+    const s = JSON.parse(localStorage.getItem(el.dataset.key)); if (!s) return;
+    let d = 0;
+    for (const k in s.q || {}) if (s.q[k].st && s.q[k].st !== 'try') d++;
+    for (const k in s.p2 || {}) if (s.p2[k] && s.p2[k].ok) d++;
+    el.style.width = Math.min(100, Math.round(d / +el.dataset.total * 100)) + '%';
+  } catch (e) {}
+});
+</script>
 </body>
 </html>
