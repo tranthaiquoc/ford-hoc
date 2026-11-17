@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Unit 9 · Từ vựng</title>
+<style>
+:root{
+  --bg:#FFF8EC; --ink:#2B2D42; --muted:#6B6F80; --card:#FFFFFF;
+  --pri:#FF8A3D; --pri2:#FFB347; --ok:#2EBD6B; --bad:#F2545B; --blue:#3A86FF; --purple:#8A5CF6;
+  --g-sub:#3A86FF; --g-sch:#FF8A3D; --g-club:#8A5CF6; --g-ext:#2EBD6B;
+  --r:22px; --sh:0 6px 0 rgba(0,0,0,.08), 0 10px 24px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-user-select:none;user-select:none;touch-action:manipulation;min-height:100vh;
+  padding-bottom:env(safe-area-inset-bottom)}
+button{font:inherit;color:inherit;border:0;cursor:pointer;touch-action:manipulation}
+input{font:inherit}
+
+/* Header */
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;
+  padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:rgba(255,248,236,.94);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-bottom:2px solid #F3E6CF}
+.top .home{width:52px;height:52px;border-radius:16px;background:#fff;font-size:26px;box-shadow:var(--sh)}
+.top .ttl{flex:1;font-weight:800;font-size:20px;line-height:1.15}
+.top .ttl small{display:block;font-weight:600;font-size:13px;color:var(--muted)}
+.stars{background:#fff;border-radius:999px;padding:10px 16px;font-weight:800;font-size:20px;box-shadow:var(--sh)}
+.stars.bump{animation:bump .4s}
+@keyframes bump{50%{transform:scale(1.25)}}
+
+main{max-width:920px;margin:0 auto;padding:18px 16px 40px}
+
+/* Home */
+.hero{background:linear-gradient(135deg,#FFB347,#FF7B54);color:#fff;border-radius:28px;padding:22px;box-shadow:var(--sh);text-align:center}
+.hero-e{font-size:54px}
+.hero h1{margin:6px 0 2px;font-size:30px}
+.hero p{margin:0 0 14px;font-weight:600;opacity:.95}
+.prog .bar{background:rgba(255,255,255,.35)}
+.prog .bar i{background:#fff}
+.prog span{display:block;margin-top:6px;font-weight:700}
+.bar{height:14px;border-radius:99px;background:#F1E4CC;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:99px;transition:width .4s}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:18px}
+.mi{background:#fff;border-radius:var(--r);padding:18px 14px;text-align:left;box-shadow:var(--sh);display:flex;flex-direction:column;gap:4px;border-left:8px solid var(--c)}
+.mi:active{transform:translateY(3px)}
+.mi-e{font-size:40px}
+.mi b{font-size:20px}
+.mi small{color:var(--muted);font-size:14px;font-weight:600}
+.tip{margin-top:18px;background:#fff;border-radius:16px;padding:12px 14px;color:var(--muted);font-size:15px;font-weight:600;text-align:center}
+
+/* Common */
+.row{display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin:14px 0}
+.btn{background:#fff;border-radius:18px;padding:14px 22px;font-size:20px;font-weight:800;box-shadow:var(--sh)}
+.btn:active,.opt:active,.tile:active{transform:translateY(3px)}
+.btn.pri{background:var(--pri);color:#fff}
+.btn.ok{background:var(--ok);color:#fff}
+.btn.bad{background:var(--bad);color:#fff}
+.btn.blue{background:var(--blue);color:#fff}
+.snd{background:var(--blue);color:#fff}
+.bigsnd{width:120px;height:120px;border-radius:50%;font-size:56px;background:var(--blue);color:#fff;box-shadow:var(--sh)}
+.bigsnd.pulse{animation:pulse 1s}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.hint{text-align:center;color:var(--muted);font-weight:700;font-size:18px;margin:6px 0}
+.ghead{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:18px;margin-bottom:8px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px;-webkit-overflow-scrolling:touch}
+.chip{flex:none;background:#fff;border-radius:999px;padding:10px 16px;font-weight:700;font-size:16px;box-shadow:0 3px 0 rgba(0,0,0,.06)}
+.chip.on{background:var(--ink);color:#fff}
+
+/* Flashcard */
+.fc-count{text-align:center;font-weight:800;color:var(--muted);font-size:18px}
+.card3d{perspective:1200px;max-width:560px;margin:10px auto;height:min(52vh,420px)}
+.inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;-webkit-transform-style:preserve-3d}
+.card3d.flip .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:28px;background:#fff;box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;border:6px solid var(--gc,#eee)}
+.face.back{transform:rotateY(180deg);background:#FFFDF6}
+.big-e{font-size:min(22vw,120px);line-height:1.1}
+.en{font-size:min(9vw,52px);font-weight:900;margin-top:8px;word-break:break-word}
+.en.sm{font-size:24px;color:var(--muted);font-weight:800}
+.ty{font-size:20px;color:var(--muted);font-weight:700}
+.full{font-size:18px;color:var(--muted);font-style:italic;margin-top:4px}
+.vi{font-size:min(8vw,44px);font-weight:900;color:var(--pri)}
+.tap{position:absolute;bottom:14px;font-size:15px;color:#A3A7B5;font-weight:700}
+.badge{position:absolute;top:14px;right:16px;background:var(--ok);color:#fff;border-radius:99px;padding:4px 12px;font-size:14px;font-weight:800}
+.nav{width:64px;height:64px;border-radius:50%;background:#fff;font-size:26px;box-shadow:var(--sh)}
+.empty{text-align:center;font-size:24px;font-weight:800;padding:40px 10px}
+
+.en.long{font-size:min(6vw,34px)}
+.ipa{font-size:20px;color:var(--blue);font-weight:700;margin-top:4px}
+.ex{font-size:18px;margin-top:12px;font-weight:600;line-height:1.35}
+.ex i{color:var(--muted)}
+.lex{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+
+.warn{background:#FFF1D6;border:3px solid #FFB347;border-radius:20px;padding:16px;text-align:center;font-size:17px;font-weight:600;line-height:1.5}
+.warn b:first-child{display:block;font-size:20px;margin-bottom:6px;color:#C2410C}
+
+/* Bố cục điện thoại */
+.fcrow{flex-wrap:nowrap;gap:8px;margin:10px 0}
+.fcrow .btn{flex:1 1 0;min-width:0;white-space:nowrap;padding:14px 8px;max-width:220px}
+.nav{flex:none}
+.card3d{height:min(420px,max(230px,calc(100vh - 360px)))}
+@media (max-width:600px){
+  .top{padding:calc(6px + env(safe-area-inset-top)) 12px 6px;gap:10px}
+  .top .home{width:44px;height:44px;font-size:22px;border-radius:14px}
+  .top .ttl{font-size:16px}
+  .stars{padding:8px 12px;font-size:17px}
+  main{padding:10px 12px 30px}
+  .chips{padding-bottom:6px}
+  .chip{padding:8px 12px;font-size:14px}
+  .fcrow .btn{font-size:16px;padding:12px 4px;border-radius:16px}
+  .nav{width:50px;height:50px;font-size:20px}
+  .big-e{font-size:68px}
+  .en{font-size:34px} .en.long{font-size:22px}
+  .vi{font-size:28px}
+  .ex{font-size:15px}
+  .opt{font-size:18px;padding:14px 8px;min-height:66px}
+  .bigsnd{width:96px;height:96px;font-size:44px}
+  .btn{font-size:18px;padding:12px 18px}
+  .tfbtn{padding:20px 8px;font-size:24px}
+  .qbox .e{font-size:52px} .qbox .vi{font-size:26px}
+}
+
+/* Ngữ pháp */
+.gnote{background:#fff;border-radius:24px;padding:16px 18px;box-shadow:var(--sh);font-size:17px;line-height:1.5}
+.gnote h3{margin:18px 0 8px;color:var(--blue);font-size:20px}
+.gnote h3:first-child{margin-top:0}
+.gnote ul{margin:0 0 8px;padding-left:22px}
+.gnote table{border-collapse:collapse;width:100%;margin:6px 0;font-size:16px}
+.gnote th,.gnote td{border:2px solid #F1E4CC;padding:8px;text-align:center}
+.gnote th{background:#FFF1D6}
+.gnote .tw{overflow-x:auto}
+.gnote .pr td:first-child{font-weight:800}
+.gex{background:#EEF4FF;border-radius:12px;padding:8px 12px;margin:6px 0;font-weight:700;cursor:pointer}
+.gex::before{content:'🔊 '}
+.gq{font-size:24px;font-weight:800;line-height:1.4}
+.blank{color:var(--blue);border-bottom:3px solid var(--blue);padding:0 4px}
+.blank.good{color:var(--ok);border-color:var(--ok)} .blank.no{color:var(--bad);border-color:var(--bad)}
+@media (max-width:600px){.gnote{font-size:15px;padding:14px}.gnote table{font-size:14px}.gnote th,.gnote td{padding:6px 4px}.gq{font-size:20px}}
+
+/* List */
+.grp{margin:18px 0 8px;font-size:22px;font-weight:900;color:var(--gc)}
+.li{display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:12px 14px;margin-bottom:10px;box-shadow:0 3px 0 rgba(0,0,0,.05);border-left:6px solid var(--gc);width:100%;text-align:left}
+.li .e{font-size:32px;width:44px;text-align:center}
+.li .w{flex:1}
+.li .w b{font-size:20px}
+.li .w span{color:var(--muted);font-weight:700;font-size:14px}
+.li .w div{color:var(--pri);font-weight:700;font-size:17px}
+.li .s{font-size:26px}
+.li .k{font-size:18px}
+
+/* Options */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.opt{background:#fff;border-radius:20px;padding:20px 12px;font-size:21px;font-weight:800;box-shadow:var(--sh);min-height:84px;border:4px solid transparent}
+.opt.ok{background:#E3F8EC;border-color:var(--ok)}
+.opt.bad{background:#FDE5E6;border-color:var(--bad)}
+.fb{text-align:center;margin-top:16px;font-size:22px;font-weight:800;min-height:30px}
+.fb .good{color:var(--ok)} .fb .no{color:var(--bad)}
+.qbox{background:#fff;border-radius:24px;padding:18px;text-align:center;box-shadow:var(--sh)}
+.qbox .vi{font-size:34px}
+.qbox .e{font-size:64px}
+
+/* Memory */
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:600px){.mgrid{grid-template-columns:repeat(3,1fr)}}
+.mc{perspective:800px;aspect-ratio:1/1.05}
+.mc .inner{border-radius:18px}
+.mc.flip .inner{transform:rotateY(180deg)}
+.mc .face{border-radius:18px;border:4px solid #eee;padding:6px;font-size:clamp(14px,2.6vw,22px);font-weight:800}
+.mc .face.front{background:linear-gradient(135deg,#8A5CF6,#3A86FF);color:#fff;font-size:44px;border-color:transparent}
+.mc .face.back{transform:rotateY(180deg)}
+.mc .face.back.en-c{color:var(--blue)}
+.mc .face.back.vi-c{color:var(--pri)}
+.mc .face.back .me{font-size:30px}
+.mc.done .face.back{background:#E3F8EC;border-color:var(--ok)}
+
+/* Spell */
+.slots,.tiles{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.slot{width:52px;height:60px;border-radius:14px;background:#fff;border:3px dashed #D5C7AE;font-size:30px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.slot.f{border-style:solid;border-color:var(--blue);color:var(--blue)}
+.slots.ok .slot{border-color:var(--ok);color:var(--ok);background:#E3F8EC}
+.slots.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+.tile{width:60px;height:64px;border-radius:16px;background:var(--pri2);color:#fff;font-size:32px;font-weight:900;box-shadow:0 5px 0 #E08A1E}
+.tile.used{visibility:hidden}
+@media (max-width:600px){.slot{width:38px;height:48px;font-size:24px}.tile{width:50px;height:54px;font-size:26px}}
+
+/* True/False */
+.timer{font-size:28px;font-weight:900;text-align:center}
+.timer.low{color:var(--bad)}
+.tfcard{background:#fff;border-radius:28px;padding:30px 16px;text-align:center;box-shadow:var(--sh);margin-top:10px;border:6px solid transparent;transition:border-color .2s}
+.tfcard.ok{border-color:var(--ok)} .tfcard.bad{border-color:var(--bad)}
+.tfcard .en{font-size:44px}
+.tfcard .eq{font-size:30px;color:var(--muted);margin:4px 0}
+.tfcard .vi{font-size:34px}
+.tfbtn{flex:1;max-width:240px;padding:24px 10px;font-size:30px}
+
+/* Write */
+.winput{width:100%;max-width:460px;display:block;margin:14px auto;padding:16px 18px;font-size:28px;font-weight:800;border-radius:18px;border:4px solid #E6D8BF;background:#fff;text-align:center;-webkit-user-select:text;user-select:text;outline:none}
+.winput:focus{border-color:var(--blue)}
+
+/* Result */
+.result{text-align:center;background:#fff;border-radius:28px;padding:26px 18px;box-shadow:var(--sh)}
+.result .re{font-size:80px}
+.result h2{font-size:30px;margin:6px 0}
+.result .sc{font-size:44px;font-weight:900;color:var(--pri)}
+.wrongs{text-align:left;margin-top:16px}
+
+/* FX */
+#fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:50}
+.cf{position:absolute;top:-40px;font-size:28px;animation:fall 2.2s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:14px;font-weight:700;z-index:60;max-width:90vw;text-align:center}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="home" id="homeBtn" aria-label="Trang chủ">🏠</button>
+  <div class="ttl" id="ttl">Unit 9<small>Từ vựng Unit 9</small></div>
+  <div class="stars" id="stars">⭐ <span id="starN">0</span></div>
+</header>
+<main id="app">
+<!-- STATIC:BEGIN -->
+<div class="warn">
+  <b>⚠️ Đang mở ở chế độ XEM TRƯỚC</b>
+  Ở chế độ này trò chơi và âm thanh không chạy được.<br>
+  Hãy mở bài học bằng trình duyệt <b>Safari</b> để học đầy đủ.<br>
+  Bên dưới là danh sách từ để xem tạm.
+</div>
+<h2 style="text-align:center;margin:18px 0 0">Unit 9 · Vocabulary - Book 2</h2>
+<div class="grp" style="--gc:var(--g-sub)">📖 Từ vựng (19)</div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🙅</span><span class="w"><b>deny</b> <span> (v) /dɪˈnaɪ/</span><div>Phủ nhận</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🥀</span><span class="w"><b>die</b> <span> (v) /daɪ/</span><div>Chết</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🛌</span><span class="w"><b>lie</b> <span> (v) /laɪ/</span><div>Nằm; nói dối</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🥧</span><span class="w"><b>pie</b> <span> (n) /paɪ/</span><div>Bánh nướng</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">👔</span><span class="w"><b>tie</b> <span> (v/n) /taɪ/</span><div>Buộc; cà vạt/trận hòa</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">😘</span><span class="w"><b>kiss</b> <span> (v/n) /kɪs/</span><div>Hôn; nụ hôn</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">💍</span><span class="w"><b>ring</b> <span> (n/v) /rɪŋ/</span><div>Nhẫn; reo lên</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🐜</span><span class="w"><b>little</b> <span> (adj) /ˈlɪt.əl/</span><div>Nhỏ</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🔣</span><span class="w"><b>symbol</b> <span> (n) /ˈsɪm.bəl/</span><div>Biểu tượng</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">📋</span><span class="w"><b>typical</b> <span> (adj) /ˈtɪp.ɪ.kəl/</span><div>Điển hình</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">✅</span><span class="w"><b>right</b> <span> (adj/adv) /raɪt/</span><div>Đúng; bên phải</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">❌</span><span class="w"><b>wrong</b> <span> (adj) /rɒŋ/</span><div>Sai</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">⬅️</span><span class="w"><b>left</b> <span> (adj/adv) /left/</span><div>Bên trái</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🤑</span><span class="w"><b>rich</b> <span> (adj) /rɪtʃ/</span><div>Giàu</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🥺</span><span class="w"><b>poor</b> <span> (adj) /pɔːr/</span><div>Nghèo</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">✈️</span><span class="w"><b>flight</b> <span> (n) /flaɪt/</span><div>Chuyến bay</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">📝</span><span class="w"><b>apply</b> <span> (v) /əˈplaɪ/</span><div>Nộp đơn; áp dụng</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🏗️</span><span class="w"><b>build</b> <span> (v) /bɪld/</span><div>Xây dựng</div></span></div>
+<div class="li" style="--gc:var(--g-sub)"><span class="e">🍪</span><span class="w"><b>biscuit</b> <span> (n) /ˈbɪs.kɪt/</span><div>Bánh quy</div></span></div>
+<div class="grp" style="--gc:var(--g-sch)">🏃 Thể thao &amp; trò chơi (10)</div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">🏁</span><span class="w"><b>race</b> <span> (n/v) /reɪs/</span><div>Cuộc đua; chạy đua</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">🏃</span><span class="w"><b>relay</b> <span> (n) /ˈriː.leɪ/</span><div>Chạy tiếp sức</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">🪢</span><span class="w"><b>tug-of-war</b> <span> (n) /ˌtʌɡ əv ˈwɔːr/</span><div>Kéo co</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">🦘</span><span class="w"><b>play hopscotch</b> <span> (v phr) /ˈhɒp.skɒtʃ/</span><div>Chơi nhảy lò cò</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">🔮</span><span class="w"><b>play marbles</b> <span> (v phr) /pleɪ ˈmɑː.bəlz/</span><div>Chơi bắn bi</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">🤸</span><span class="w"><b>do physical activities</b> <span> (v phr) /duː ˈfɪz.ɪ.kəl ækˈtɪv.ə.tiz/</span><div>Hoạt động thể chất</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">🚧</span><span class="w"><b>jump over hurdles</b> <span> (v phr) /dʒʌmp ˈəʊ.vər ˈhɜː.dəlz/</span><div>Nhảy qua rào</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">📣</span><span class="w"><b>cheer</b> <span> (v) /tʃɪər/</span><div>Cổ vũ</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">🤝</span><span class="w"><b>sportsmanship</b> <span> (n) /ˈspɔːts.mən.ʃɪp/</span><div>Tinh thần thể thao</div></span></div>
+<div class="li" style="--gc:var(--g-sch)"><span class="e">💪</span><span class="w"><b>stay active and healthy</b> <span> (v phr) /steɪ ˈæk.tɪv ænd ˈhel.θi/</span><div>Năng động và khỏe mạnh</div></span></div>
+<div class="grp" style="--gc:var(--g-club)">🧩 Cụm từ &amp; từ nối (7)</div>
+<div class="li" style="--gc:var(--g-club)"><span class="e">🌞</span><span class="w"><b>typical day</b> <span> (n phr) /ˈtɪp.ɪ.kəl deɪ/</span><div>Ngày điển hình</div></span></div>
+<div class="li" style="--gc:var(--g-club)"><span class="e">😮</span><span class="w"><b>even</b> <span> (adv) /ˈiː.vən/</span><div>Thậm chí</div></span></div>
+<div class="li" style="--gc:var(--g-club)"><span class="e">🍀</span><span class="w"><b>get a chance</b> <span> (v phr) /ɡet ə tʃɑːns/</span><div>Có cơ hội</div></span></div>
+<div class="li" style="--gc:var(--g-club)"><span class="e">👍</span><span class="w"><b>a great way</b> <span> (n phr) /ə ɡreɪt weɪ/</span><div>Một cách tuyệt vời</div></span></div>
+<div class="li" style="--gc:var(--g-club)"><span class="e">⏳</span><span class="w"><b>while</b> <span> (conj) /waɪl/</span><div>Trong khi</div></span></div>
+<div class="li" style="--gc:var(--g-club)"><span class="e">😎</span><span class="w"><b>show off</b> <span> (v) /ʃəʊ ɒf/</span><div>Khoe, thể hiện</div></span></div>
+<div class="li" style="--gc:var(--g-club)"><span class="e">🤩</span><span class="w"><b>look forward to</b> <span> (v phr) /lʊk ˈfɔː.wəd tuː/</span><div>Mong đợi</div></span></div>
+<!-- STATIC:END -->
+</main>
+<div id="fx"></div>
+
+<script>
+/* ====== DỮ LIỆU BÀI HỌC (đổi phần này cho các Unit sau) ====== */
+const UNIT = { key:'ford_vocab_u9', title:'Unit 9', sub:'Vocabulary - Book 2', e:'🏁🪢' };
+const GROUPS = [
+  { id:'w',  name:'Từ vựng',               e:'📖', c:'var(--g-sub)'  },
+  { id:'sp', name:'Thể thao & trò chơi',   e:'🏃', c:'var(--g-sch)'  },
+  { id:'ph', name:'Cụm từ & từ nối',       e:'🧩', c:'var(--g-club)' },
+];
+// en: từ · t: từ loại · ipa: phiên âm · vi: nghĩa · e: emoji · g: nhóm · ex/exVi: ví dụ · note: ghi chú · say: cách đọc · alt: đáp án chấp nhận thêm
+const W = [
+  { en:'deny',     t:'v',       ipa:'/dɪˈnaɪ/',     vi:'Phủ nhận',               e:'🙅', g:'w' },
+  { en:'die',      t:'v',       ipa:'/daɪ/',        vi:'Chết',                   e:'🥀', g:'w' },
+  { en:'lie',      t:'v',       ipa:'/laɪ/',        vi:'Nằm; nói dối',           e:'🛌', g:'w' },
+  { en:'pie',      t:'n',       ipa:'/paɪ/',        vi:'Bánh nướng',             e:'🥧', g:'w' },
+  { en:'tie',      t:'v/n',     ipa:'/taɪ/',        vi:'Buộc; cà vạt/trận hòa',  e:'👔', g:'w' },
+  { en:'kiss',     t:'v/n',     ipa:'/kɪs/',        vi:'Hôn; nụ hôn',            e:'😘', g:'w' },
+  { en:'ring',     t:'n/v',     ipa:'/rɪŋ/',        vi:'Nhẫn; reo lên',          e:'💍', g:'w' },
+  { en:'little',   t:'adj',     ipa:'/ˈlɪt.əl/',    vi:'Nhỏ',                    e:'🐜', g:'w' },
+  { en:'symbol',   t:'n',       ipa:'/ˈsɪm.bəl/',   vi:'Biểu tượng',             e:'🔣', g:'w' },
+  { en:'typical',  t:'adj',     ipa:'/ˈtɪp.ɪ.kəl/', vi:'Điển hình',              e:'📋', g:'w' },
+  { en:'right',    t:'adj/adv', ipa:'/raɪt/',       vi:'Đúng; bên phải',         e:'✅', g:'w', note:'right - wrong: đúng - sai; right - left: phải - trái' },
+  { en:'wrong',    t:'adj',     ipa:'/rɒŋ/',        vi:'Sai',                    e:'❌', g:'w' },
+  { en:'left',     t:'adj/adv', ipa:'/left/',       vi:'Bên trái',               e:'⬅️', g:'w', note:'right - left: phải - trái' },
+  { en:'rich',     t:'adj',     ipa:'/rɪtʃ/',       vi:'Giàu',                   e:'🤑', g:'w' },
+  { en:'poor',     t:'adj',     ipa:'/pɔːr/',       vi:'Nghèo',                  e:'🥺', g:'w' },
+  { en:'flight',   t:'n',       ipa:'/flaɪt/',      vi:'Chuyến bay',             e:'✈️', g:'w' },
+  { en:'apply',    t:'v',       ipa:'/əˈplaɪ/',     vi:'Nộp đơn; áp dụng',       e:'📝', g:'w' },
+  { en:'build',    t:'v',       ipa:'/bɪld/',       vi:'Xây dựng',               e:'🏗️', g:'w' },
+  { en:'biscuit',  t:'n',       ipa:'/ˈbɪs.kɪt/',   vi:'Bánh quy',               e:'🍪', g:'w' },
+
+  { en:'race',           t:'n/v',    ipa:'/reɪs/',          vi:'Cuộc đua; chạy đua',   e:'🏁', g:'sp' },
+  { en:'relay',          t:'n',      ipa:'/ˈriː.leɪ/',      vi:'Chạy tiếp sức',        e:'🏃', g:'sp' },
+  { en:'tug-of-war',     t:'n',      ipa:'/ˌtʌɡ əv ˈwɔːr/', vi:'Kéo co',               e:'🪢', g:'sp' },
+  { en:'play hopscotch', t:'v phr',  ipa:'/ˈhɒp.skɒtʃ/',    vi:'Chơi nhảy lò cò',      e:'🦘', g:'sp' },
+  { en:'play marbles',   t:'v phr',  ipa:'/pleɪ ˈmɑː.bəlz/', vi:'Chơi bắn bi',         e:'🔮', g:'sp' },
+  { en:'do physical activities', t:'v phr', ipa:'/duː ˈfɪz.ɪ.kəl ækˈtɪv.ə.tiz/', vi:'Hoạt động thể chất', e:'🤸', g:'sp' },
+  { en:'jump over hurdles', t:'v phr', ipa:'/dʒʌmp ˈəʊ.vər ˈhɜː.dəlz/', vi:'Nhảy qua rào', e:'🚧', g:'sp' },
+  { en:'cheer',          t:'v',      ipa:'/tʃɪər/',         vi:'Cổ vũ',                e:'📣', g:'sp' },
+  { en:'sportsmanship',  t:'n',      ipa:'/ˈspɔːts.mən.ʃɪp/', vi:'Tinh thần thể thao', e:'🤝', g:'sp' },
+  { en:'stay active and healthy', t:'v phr', ipa:'/steɪ ˈæk.tɪv ænd ˈhel.θi/', vi:'Năng động và khỏe mạnh', e:'💪', g:'sp' },
+
+  { en:'typical day',     t:'n phr', ipa:'/ˈtɪp.ɪ.kəl deɪ/',  vi:'Ngày điển hình',     e:'🌞', g:'ph' },
+  { en:'even',            t:'adv',   ipa:'/ˈiː.vən/',         vi:'Thậm chí',           e:'😮', g:'ph' },
+  { en:'get a chance',    t:'v phr', ipa:'/ɡet ə tʃɑːns/',    vi:'Có cơ hội',          e:'🍀', g:'ph' },
+  { en:'a great way',     t:'n phr', ipa:'/ə ɡreɪt weɪ/',     vi:'Một cách tuyệt vời', e:'👍', g:'ph' },
+  { en:'while',           t:'conj',  ipa:'/waɪl/',            vi:'Trong khi',          e:'⏳', g:'ph' },
+  { en:'show off',        t:'v',     ipa:'/ʃəʊ ɒf/',          vi:'Khoe, thể hiện',     e:'😎', g:'ph' },
+  { en:'look forward to', t:'v phr', ipa:'/lʊk ˈfɔː.wəd tuː/', vi:'Mong đợi',          e:'🤩', g:'ph' },
+];
+
+// Ngữ pháp: notes theo file Word; qs là bài luyện tập (câu tự soạn để luyện)
+const GRAMMAR = {
+  notes: `
+  <h3>1. Số ít → Số nhiều</h3>
+  <table><tr><th>Số ít</th><th>Số nhiều</th></tr>
+    <tr><td>This is</td><td>These are</td></tr>
+    <tr><td>That is</td><td>Those are</td></tr></table>
+
+  <h3>2. Some</h3>
+  <ul><li>Dùng trong <b>câu khẳng định</b> hoặc <b>lời đề nghị</b>.</li>
+    <li>Dùng với danh từ <b>đếm được số nhiều</b> (some apples, some strawberries).</li>
+    <li>Dùng với danh từ <b>không đếm được</b> (some milk, water, sugar, rice, meat, cheese, butter, bread, tea, honey…).</li></ul>
+  <p class="gex" data-t="There is some water in the bottle.">There is some water in the bottle.</p>
+  <p class="gex" data-t="There are some apples on the table.">There are some apples on the table.</p>
+  <p class="gex" data-t="Would you like to drink some milk?">Would you like to drink some milk?</p>
+
+  <h3>3. Any</h3>
+  <ul><li>Dùng trong <b>câu hỏi</b> hoặc <b>câu phủ định</b>.</li></ul>
+  <p class="gex" data-t="Is there any milk in the fridge?">Is there any milk in the fridge?</p>
+  <p class="gex" data-t="There aren't any apples in the fridge.">There aren't any apples in the fridge.</p>
+
+  <h3>4. There is / There are</h3>
+  <ul><li><b>There is</b> + a/an + danh từ đếm được số ít</li>
+    <li><b>There is</b> + (some) + danh từ KHÔNG đếm được</li>
+    <li><b>There are</b> + two / three… / some + danh từ đếm được số nhiều</li></ul>
+  <p class="gex" data-t="There is an apple in the fridge.">There is an apple in the fridge.</p>
+  <p class="gex" data-t="There is some water in the fridge.">There is some water in the fridge.</p>
+  <p class="gex" data-t="There are three apples in the fridge.">There are three apples in the fridge.</p>
+
+  <h3>5. Đại từ</h3>
+  <div class="tw"><table class="pr"><tr><th>Đại từ nhân xưng</th><th>Tân ngữ</th><th>Tính từ sở hữu</th><th>Đại từ sở hữu</th></tr>
+    <tr><td>I</td><td>me</td><td>my</td><td>mine</td></tr>
+    <tr><td>You</td><td>you</td><td>your</td><td>yours</td></tr>
+    <tr><td>We</td><td>us</td><td>our</td><td>ours</td></tr>
+    <tr><td>He</td><td>him</td><td>his</td><td>his</td></tr>
+    <tr><td>She</td><td>her</td><td>her</td><td>hers</td></tr>
+    <tr><td>It</td><td>it</td><td>its</td><td>(không có dạng sở hữu)</td></tr>
+    <tr><td>They</td><td>them</td><td>their</td><td>theirs</td></tr></table></div>`,
+  qs: [
+    { q:'There is ___ water in the bottle.',       o:['some','any'], a:'some', why:'Câu khẳng định → some' },
+    { q:'Is there ___ milk in the fridge?',        o:['some','any'], a:'any',  why:'Câu hỏi → any' },
+    { q:"There aren't ___ apples on the table.",   o:['some','any'], a:'any',  why:'Câu phủ định → any' },
+    { q:'Would you like ___ juice?',               o:['some','any'], a:'some', why:'Lời mời, đề nghị → some' },
+    { q:'I have ___ sweets in my bag.',            o:['some','any'], a:'some', why:'Câu khẳng định → some' },
+    { q:"We don't have ___ rice at home.",         o:['some','any'], a:'any',  why:'Câu phủ định → any' },
+    { q:'___ an apple in the fridge.',             o:['There is','There are'], a:'There is',  why:'an apple: số ít → There is' },
+    { q:'___ three apples in the fridge.',         o:['There is','There are'], a:'There are', why:'three apples: số nhiều → There are' },
+    { q:'___ some water in the glass.',            o:['There is','There are'], a:'There is',  why:'water: không đếm được → There is' },
+    { q:'___ some books on the desk.',             o:['There is','There are'], a:'There are', why:'books: số nhiều → There are' },
+    { q:'This is a pen. → ___ are pens.',          o:['These','Those','This'], a:'These', why:'This is → These are' },
+    { q:'That is a bird. → ___ are birds.',        o:['These','Those','That'], a:'Those', why:'That is → Those are' },
+    { q:'This book is ___. (I)',                   o:['me','my','mine'],    a:'mine',   why:'Cuối câu, thay cho "my book" → đại từ sở hữu' },
+    { q:'Please help ___. (we)',                   o:['we','us','our'],     a:'us',     why:'Sau động từ → tân ngữ' },
+    { q:'___ bag is red. (she)',                   o:['She','Her','Hers'],  a:'Her',    why:'Đứng trước danh từ → tính từ sở hữu' },
+    { q:'I like ___. (he)',                        o:['he','him','his'],    a:'him',    why:'Sau động từ → tân ngữ' },
+    { q:'These toys are ___. (they)',             o:['their','them','theirs'], a:'theirs', why:'Cuối câu, thay cho "their toys" → đại từ sở hữu' },
+    { q:'The cat is playing with ___ ball. (it)',  o:['it','its',"it's"],   a:'its',    why:'Đứng trước danh từ → tính từ sở hữu' },
+  ],
+};
+/* ============================================================== */
+
+const MENU = [
+  { id:'learn',  e:'📖', t:'Học từ',        d:'Thẻ lật · nghe phát âm', c:'#FF8A3D' },
+  { id:'list',   e:'📋', t:'Danh sách từ',  d:'Xem & nghe tất cả từ',    c:'#3A86FF' },
+  { id:'listen', e:'🎧', t:'Nghe & chọn',   d:'Nghe rồi chọn nghĩa',     c:'#8A5CF6' },
+  { id:'memory', e:'🧩', t:'Lật thẻ ghép cặp', d:'Tìm cặp Anh – Việt',   c:'#2EBD6B' },
+  { id:'spell',  e:'🔤', t:'Xếp chữ',       d:'Ghép chữ cái thành từ',   c:'#F2545B' },
+  { id:'tf',     e:'⚡', t:'Đúng hay Sai',  d:'Thử thách 60 giây',       c:'#FFB347' },
+  { id:'grammar', e:'📘', t:'Ngữ pháp',     d:'Ghi nhớ + luyện tập',  c:'#3A86FF' },
+  { id:'test',   e:'📝', t:'Kiểm tra',      d:'15 câu · cả bài',       c:'#2B2D42' },
+];
+
+/* ---------- Lưu tiến độ ---------- */
+const S = (() => {
+  let d = null;
+  try { d = JSON.parse(localStorage.getItem(UNIT.key)); } catch(e) {}
+  return Object.assign({ stars:0, known:{}, best:{} }, d || {});
+})();
+function save(){ try { localStorage.setItem(UNIT.key, JSON.stringify(S)); } catch(e) {} }
+
+/* ---------- Tiện ích ---------- */
+const app = document.getElementById('app');
+const $ = (s, r=app) => r.querySelector(s);
+const $$ = (s, r=app) => [...r.querySelectorAll(s)];
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.random()*(i+1)|0; [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const grpOf = id => GROUPS.find(g => g.id === id);
+const byEn = en => W.find(w => w.en === en);
+const tyS = w => w.t ? ` (${w.t})` : '';
+const knownCount = () => W.filter(w => S.known[w.en]).length;
+// tránh đáp án nhiễu trùng nghĩa (vd: Khó / Khó; chăm chỉ)
+const overlap = (a, b) => { a = a.toLowerCase(); b = b.toLowerCase(); return a.includes(b) || b.includes(a); };
+function distract(w, n){
+  const same = shuffle(W.filter(x => x !== w && x.g === w.g));
+  const other = shuffle(W.filter(x => x.g !== w.g));
+  const mix = shuffle(same.slice(0, Math.ceil(n/2)).concat(other.slice(0, n))).concat(same, other);
+  const out = [];
+  for (const x of mix){ if (out.length >= n) break; if (x !== w && !out.includes(x) && !overlap(x.vi, w.vi)) out.push(x); }
+  return out;
+}
+const norm = s => s.toLowerCase().replace(/[^a-z ]/g,'').replace(/\s+/g,' ').trim();
+const isRight = (w, s) => [w.en, ...(w.alt||[])].some(a => norm(a) === norm(s));
+const PRAISE = ['Giỏi quá! 🎉','Tuyệt vời! 🌟','Chính xác! 👏','Xuất sắc! 🏆','Đúng rồi! 😍'];
+const praise = () => PRAISE[Math.random()*PRAISE.length|0];
+
+/* ---------- Âm thanh ---------- */
+let voice = null;
+function pickVoice(){
+  if (!('speechSynthesis' in window)) return;
+  const vs = speechSynthesis.getVoices().filter(v => /^en[-_]/i.test(v.lang));
+  voice = vs.find(v => /en[-_]US/i.test(v.lang) && /Samantha|Ava|Allison|Susan|Google US/i.test(v.name))
+       || vs.find(v => /en[-_]US/i.test(v.lang)) || vs.find(v => /en[-_]GB/i.test(v.lang)) || vs[0] || null;
+}
+if ('speechSynthesis' in window){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(w, slow){
+  if (!('speechSynthesis' in window)) { toast('Thiết bị này chưa hỗ trợ đọc. Hãy mở bằng Safari nhé!'); return; }
+  const text = typeof w === 'string' ? w : (w.say || w.en);
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = voice ? voice.lang : 'en-US';
+  if (voice) u.voice = voice;
+  u.rate = slow ? 0.5 : 0.85;
+  speechSynthesis.speak(u);
+}
+let ac = null;
+function tone(freqs, dur, type, vol){
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === 'suspended') ac.resume();
+    const t = ac.currentTime;
+    freqs.forEach((f, i) => {
+      const o = ac.createOscillator(), g = ac.createGain();
+      o.type = type || 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t + i*dur);
+      g.gain.exponentialRampToValueAtTime(vol || 0.2, t + i*dur + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + (i+1)*dur);
+      o.connect(g); g.connect(ac.destination);
+      o.start(t + i*dur); o.stop(t + (i+1)*dur + 0.03);
+    });
+  } catch(e) {}
+}
+const sfx = {
+  good: () => tone([660, 880, 1175], 0.09),
+  bad:  () => tone([260, 190], 0.16, 'triangle', 0.25),
+  tap:  () => tone([520], 0.05, 'sine', 0.08),
+  win:  () => tone([523, 659, 784, 1047], 0.12),
+};
+
+/* ---------- Hiệu ứng ---------- */
+function addStar(n=1){
+  S.stars += n; save();
+  document.getElementById('starN').textContent = S.stars;
+  const el = document.getElementById('stars');
+  el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
+}
+function confetti(){
+  const fx = document.getElementById('fx');
+  const items = ['⭐','🎉','✨','🌟','🎈','💛'];
+  for (let i=0;i<36;i++){
+    const s = document.createElement('span');
+    s.className = 'cf'; s.textContent = items[i % items.length];
+    s.style.left = Math.random()*100 + 'vw';
+    s.style.animationDelay = Math.random()*0.8 + 's';
+    s.style.fontSize = 20 + Math.random()*22 + 'px';
+    fx.appendChild(s);
+    setTimeout(() => s.remove(), 3200);
+  }
+}
+function toast(msg, ms=2200){
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), ms);
+}
+
+/* ---------- Điều hướng ---------- */
+let cleanup = null;
+function go(id){
+  if (cleanup) { cleanup(); cleanup = null; }
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  window.scrollTo(0, 0);
+  ({ home, learn, list, listen:listenGame, memory, spell, tf, test, grammar })[id]();
+}
+document.getElementById('homeBtn').onclick = () => { sfx.tap(); go('home'); };
+
+/* ---------- Trang chủ ---------- */
+function home(){
+  const k = knownCount();
+  app.innerHTML = `
+    <section class="hero">
+      <div class="hero-e">${UNIT.e}</div>
+      <h1>${UNIT.title}</h1>
+      <p>${UNIT.sub} · ${W.length} từ mới</p>
+      <div class="prog"><div class="bar"><i style="width:${k/W.length*100}%"></i></div><span>Đã thuộc ${k} / ${W.length} từ</span></div>
+    </section>
+    <div class="menu">${MENU.map(m => `
+      <button class="mi" style="--c:${m.c}" data-go="${m.id}"><span class="mi-e">${m.e}</span><b>${m.t}</b><small>${m.d}</small></button>`).join('')}
+    </div>
+    <div class="tip">🔊 Nhớ bật loa iPad để nghe phát âm nhé!</div>`;
+  $$('[data-go]').forEach(b => b.onclick = () => { sfx.tap(); go(b.dataset.go); });
+}
+
+/* ---------- 1. Flashcard ---------- */
+let fc = { filter:'all', list:[], i:0, custom:null };
+function learn(filter, custom){
+  if (custom) { fc.custom = custom; fc.filter = 'custom'; }
+  else if (filter) fc.filter = filter;
+  if (fc.filter === 'custom' && !fc.custom) fc.filter = 'all';
+  const f = fc.filter;
+  fc.list = f === 'all' ? W.slice()
+          : f === 'todo' ? W.filter(w => !S.known[w.en])
+          : f === 'custom' ? fc.custom.slice()
+          : W.filter(w => w.g === f);
+  fc.i = 0;
+  renderFC(true);
+}
+function chipsHTML(){
+  const cs = [{id:'all', t:'Tất cả'}, {id:'todo', t:'🔁 Chưa thuộc'}]
+    .concat(fc.custom ? [{id:'custom', t:'❗ Từ sai'}] : [])
+    .concat(GROUPS.map(g => ({ id:g.id, t:g.e+' '+g.name })));
+  return `<div class="chips">${cs.map(c => `<button class="chip ${fc.filter===c.id?'on':''}" data-f="${c.id}">${c.t}</button>`).join('')}</div>`;
+}
+function renderFC(autoSay){
+  const w = fc.list[fc.i];
+  if (!w){
+    app.innerHTML = chipsHTML() + `<div class="empty">🎉 Không còn từ nào ở đây!<br><br><button class="btn pri" data-f="all">Học lại tất cả</button></div>`;
+    $$('[data-f]').forEach(b => b.onclick = () => { sfx.tap(); learn(b.dataset.f); });
+    return;
+  }
+  const g = grpOf(w.g);
+  app.innerHTML = `${chipsHTML()}
+    <div class="fc-count">${fc.i+1} / ${fc.list.length}</div>
+    <div class="card3d" id="card" style="--gc:${g.c}"><div class="inner">
+      <div class="face front">
+        ${S.known[w.en] ? '<span class="badge">✅ Đã thuộc</span>' : ''}
+        <div class="big-e">${w.e}</div>
+        <div class="en${w.en.length > 16 ? ' long' : ''}">${w.en}</div>
+        ${w.t ? `<div class="ty">(${w.t})</div>` : ''}${w.ipa ? `<div class="ipa">${w.ipa}</div>` : ''}
+        ${w.full ? `<div class="full">${w.full}</div>` : ''}
+        <div class="tap">👆 Chạm để xem nghĩa</div>
+      </div>
+      <div class="face back">
+        <div class="big-e">${w.e}</div>
+        <div class="vi">${w.vi}</div>
+        <div class="en sm">${w.en}${tyS(w)}</div>${w.ex ? `<div class="ex">📌 ${w.ex}${w.exVi ? `<br><i>${w.exVi}</i>` : ''}</div>` : ''}${w.note ? `<div class="ex">🧠 ${w.note}</div>` : ''}
+      </div>
+    </div></div>
+    <div class="row fcrow">
+      <button class="btn snd" id="say">🔊 Nghe</button>
+      <button class="btn snd" id="slow">🐢 Chậm</button>
+      ${w.ex ? '<button class="btn snd" id="sayEx">📌 Ví dụ</button>' : ''}
+    </div>
+    <div class="row fcrow">
+      <button class="nav" id="prev">◀</button>
+      <button class="btn bad" id="no">🔁 Học lại</button>
+      <button class="btn ok" id="yes">✅ Đã thuộc</button>
+      <button class="nav" id="next">▶</button>
+    </div>`;
+  $$('[data-f]').forEach(b => b.onclick = () => { sfx.tap(); learn(b.dataset.f); });
+  const card = $('#card');
+  card.onclick = () => { card.classList.toggle('flip'); sfx.tap(); };
+  let x0 = null;
+  card.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive:true });
+  card.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 60) { e.preventDefault(); move(dx < 0 ? 1 : -1); }
+  });
+  $('#say').onclick = () => speak(w);
+  $('#slow').onclick = () => speak(w, true);
+  if (w.ex) $('#sayEx').onclick = () => speak(w.ex);
+  $('#prev').onclick = () => move(-1);
+  $('#next').onclick = () => move(1);
+  $('#yes').onclick = () => {
+    if (!S.known[w.en]) { S.known[w.en] = true; addStar(); save(); }
+    sfx.good(); toast(praise(), 900);
+    if (fc.i === fc.list.length - 1 && knownCount() === W.length) confetti();
+    move(1);
+  };
+  $('#no').onclick = () => { S.known[w.en] = false; save(); sfx.tap(); move(1); };
+  if (autoSay) speak(w);
+}
+function move(d){
+  const n = fc.list.length;
+  fc.i = (fc.i + d + n) % n;
+  renderFC(true);
+}
+
+/* ---------- 2. Danh sách ---------- */
+function list(){
+  app.innerHTML = GROUPS.map(g => `
+    <div class="grp" style="--gc:${g.c}">${g.e} ${g.name} (${W.filter(w => w.g === g.id).length})</div>
+    ${W.filter(w => w.g === g.id).map(w => `
+      <button class="li" style="--gc:${g.c}" data-en="${w.en}">
+        <span class="e">${w.e}</span>
+        <span class="w"><b>${w.en}</b> <span>${tyS(w)}${w.ipa ? ' ' + w.ipa : ''}${w.full ? ' · ' + w.full : ''}</span><div>${w.vi}</div>${w.ex ? `<small class="lex">📌 ${w.ex}</small>` : ''}</span>
+        ${S.known[w.en] ? '<span class="k">✅</span>' : ''}
+        <span class="s">🔊</span>
+      </button>`).join('')}`).join('');
+  $$('.li').forEach(b => b.onclick = () => speak(byEn(b.dataset.en)));
+}
+
+/* ---------- Khung trò chơi ---------- */
+function ghead(title, i, n, score){
+  return `<div class="ghead"><span>${title}</span><span>Câu ${Math.min(i+1,n)}/${n}</span><span>⭐ ${score}</span></div>
+          <div class="bar"><i style="width:${i/n*100}%"></i></div>`;
+}
+function finish(id, score, total, note, extra){
+  const pct = total ? score/total : 1;
+  const prev = S.best[id] || 0;
+  if (score > prev) { S.best[id] = score; save(); }
+  const face = pct >= 0.9 ? '🏆' : pct >= 0.7 ? '🌟' : pct >= 0.5 ? '😊' : '💪';
+  const msg  = pct >= 0.9 ? 'Xuất sắc, Ford ơi!' : pct >= 0.7 ? 'Giỏi lắm!' : pct >= 0.5 ? 'Khá tốt, cố thêm chút nữa nhé!' : 'Luyện thêm một lần nữa nhé!';
+  app.innerHTML = `<div class="result">
+    <div class="re">${face}</div><h2>${msg}</h2>
+    <div class="sc">${score}${total ? ' / ' + total : ''}</div>
+    ${note ? `<p class="hint">${note}</p>` : ''}
+    <p class="hint">Kỷ lục: ${Math.max(prev, score)}${total ? ' / ' + total : ''}</p>
+    ${extra || ''}
+    <div class="row"><button class="btn pri" id="again">🔄 Chơi lại</button><button class="btn" id="back">🏠 Trang chủ</button></div>
+  </div>`;
+  $('#again').onclick = () => { sfx.tap(); go(id); };
+  $('#back').onclick = () => { sfx.tap(); go('home'); };
+  if (pct >= 0.7) { sfx.win(); confetti(); }
+}
+
+/* ---------- 3. Nghe & chọn ---------- */
+function listenGame(){
+  const qs = shuffle(W).slice(0, 10);
+  let i = 0, score = 0;
+  function q(){
+    if (i >= qs.length) return finish('listen', score, qs.length);
+    const w = qs[i], opts = shuffle([w, ...distract(w, 3)]);
+    let done = false;
+    app.innerHTML = `${ghead('🎧 Nghe & chọn', i, qs.length, score)}
+      <p class="hint">Nghe kỹ rồi chọn nghĩa đúng</p>
+      <div class="row"><button class="bigsnd" id="say">🔊</button><button class="btn snd" id="slow">🐢</button></div>
+      <div class="opts">${opts.map(o => `<button class="opt" data-en="${o.en}">${o.vi}</button>`).join('')}</div>
+      <div class="fb" id="fb"></div>`;
+    $('#say').onclick = () => { speak(w); $('#say').classList.remove('pulse'); void $('#say').offsetWidth; $('#say').classList.add('pulse'); };
+    $('#slow').onclick = () => speak(w, true);
+    $$('.opt').forEach(b => b.onclick = () => {
+      if (done) return; done = true;
+      const right = b.dataset.en === w.en;
+      if (right) { score++; addStar(); sfx.good(); b.classList.add('ok'); }
+      else { sfx.bad(); b.classList.add('bad'); $$('.opt').find(x => x.dataset.en === w.en).classList.add('ok'); }
+      $('#fb').innerHTML = `<div class="${right ? 'good' : 'no'}">${right ? praise() : 'Chưa đúng rồi 💪'}</div>
+        <div style="margin-top:6px">${w.e} <b>${w.en}</b> = ${w.vi}</div>
+        <div class="row"><button class="btn pri" id="nx">Tiếp theo ➜</button></div>`;
+      $('#nx').onclick = () => { i++; q(); };
+    });
+    speak(w);
+  }
+  q();
+}
+
+/* ---------- 4. Lật thẻ ghép cặp ---------- */
+function memory(){
+  const ws = shuffle(W.filter(w => w.en.length <= 20 && w.vi.length <= 32)).slice(0, 6);
+  const cards = shuffle(ws.flatMap(w => [{ k:w.en, l:'en', w }, { k:w.en, l:'vi', w }]));
+  let open = [], matched = 0, moves = 0, lock = false;
+  app.innerHTML = `<div class="ghead"><span>🧩 Lật thẻ ghép cặp</span><span id="mv">Lượt: 0</span><span id="mt">Cặp: 0/6</span></div>
+    <p class="hint">Lật 2 thẻ: tìm từ tiếng Anh và nghĩa tiếng Việt giống nhau</p>
+    <div class="mgrid">${cards.map((c, i) => `
+      <div class="mc" data-i="${i}"><div class="inner">
+        <div class="face front">❓</div>
+        <div class="face back ${c.l}-c">${c.l === 'en' ? `<div class="me">${c.w.e}</div>${c.w.en}` : c.w.vi}</div>
+      </div></div>`).join('')}</div>`;
+  $$('.mc').forEach(el => el.onclick = () => {
+    const c = cards[+el.dataset.i];
+    if (lock || el.classList.contains('flip')) return;
+    el.classList.add('flip');
+    if (c.l === 'en') speak(c.w); else sfx.tap();
+    open.push(el);
+    if (open.length < 2) return;
+    moves++; $('#mv').textContent = 'Lượt: ' + moves;
+    const [a, b] = open; open = [];
+    if (cards[+a.dataset.i].k === cards[+b.dataset.i].k){
+      matched++; addStar(); sfx.good();
+      a.classList.add('done'); b.classList.add('done');
+      $('#mt').textContent = `Cặp: ${matched}/6`;
+      if (matched === 6) setTimeout(() => finish('memory', 6, 6, `Ford đã dùng ${moves} lượt lật thẻ`), 900);
+    } else {
+      lock = true;
+      setTimeout(() => { sfx.bad(); a.classList.remove('flip'); b.classList.remove('flip'); lock = false; }, 1000);
+    }
+  });
+}
+
+/* ---------- 5. Xếp chữ ---------- */
+function spell(){
+  const pool = W.filter(w => /^[A-Za-z]{4,10}$/.test(w.en));
+  const qs = shuffle(pool).slice(0, 8);
+  let i = 0, score = 0;
+  function q(){
+    if (i >= qs.length) return finish('spell', score, qs.length);
+    const w = qs[i], target = w.en.toUpperCase().split('');
+    let tiles; do { tiles = shuffle(target); } while (tiles.join('') === target.join(''));
+    let picked = [], tries = 0, done = false;
+    app.innerHTML = `${ghead('🔤 Xếp chữ', i, qs.length, score)}
+      <div class="qbox" style="margin-top:12px"><div class="e">${w.e}</div><div class="vi">${w.vi}</div>
+        <div class="row"><button class="btn snd" id="say">🔊 Nghe</button><button class="btn snd" id="slow">🐢 Chậm</button></div></div>
+      <div class="slots" id="slots"></div>
+      <div class="tiles" id="tiles"></div>
+      <div class="row"><button class="btn" id="del">⌫ Xoá</button><button class="btn" id="hint">💡 Gợi ý</button></div>
+      <div class="fb" id="fb"></div>`;
+    function draw(){
+      $('#slots').innerHTML = target.map((_, k) => `<div class="slot ${picked[k] !== undefined ? 'f' : ''}" data-k="${k}">${picked[k] !== undefined ? tiles[picked[k]] : ''}</div>`).join('');
+      $('#tiles').innerHTML = tiles.map((ch, k) => `<button class="tile ${picked.includes(k) ? 'used' : ''}" data-k="${k}">${ch}</button>`).join('');
+      $$('.tile').forEach(t => t.onclick = () => { if (done) return; sfx.tap(); picked.push(+t.dataset.k); draw(); check(); });
+      $$('.slot.f').forEach(s => s.onclick = () => { if (done) return; picked.splice(+s.dataset.k, 1); draw(); });
+    }
+    function next(right){
+      done = true;
+      $('#fb').innerHTML = `<div class="${right ? 'good' : 'no'}">${right ? praise() : 'Đáp án đúng là:'}</div>
+        <div style="margin-top:6px"><b>${w.en}</b> = ${w.vi}</div>
+        <div class="row"><button class="btn pri" id="nx">Tiếp theo ➜</button></div>`;
+      $('#nx').onclick = () => { i++; q(); };
+    }
+    function check(){
+      if (picked.length < target.length) return;
+      const word = picked.map(k => tiles[k]).join('');
+      if (word === target.join('')){
+        score++; addStar(); sfx.good(); $('#slots').classList.add('ok'); speak(w); next(true);
+      } else {
+        tries++; sfx.bad();
+        const s = $('#slots'); s.classList.remove('shake'); void s.offsetWidth; s.classList.add('shake');
+        if (tries >= 2){
+          // hiện đáp án đúng
+          const used = [];
+          picked = target.map(ch => { const k = tiles.findIndex((t, j) => t === ch && !used.includes(j)); used.push(k); return k; });
+          draw(); speak(w); next(false);
+        } else {
+          toast('Chưa đúng, thử lại nhé! 💪', 1400);
+          setTimeout(() => { picked = []; draw(); }, 600);
+        }
+      }
+    }
+    $('#say').onclick = () => speak(w);
+    $('#slow').onclick = () => speak(w, true);
+    $('#del').onclick = () => { if (done) return; picked.pop(); draw(); };
+    $('#hint').onclick = () => {
+      if (done) return;
+      // giữ phần đúng ở đầu, thêm 1 chữ cái đúng tiếp theo
+      let ok = 0; while (ok < picked.length && tiles[picked[ok]] === target[ok]) ok++;
+      picked = picked.slice(0, ok);
+      if (ok < target.length){
+        const k = tiles.findIndex((t, j) => t === target[ok] && !picked.includes(j));
+        picked.push(k);
+      }
+      sfx.tap(); draw(); check();
+    };
+    draw(); speak(w);
+  }
+  q();
+}
+
+/* ---------- 6. Đúng hay Sai ---------- */
+function tf(){
+  app.innerHTML = `<div class="result"><div class="re">⚡</div><h2>Đúng hay Sai?</h2>
+    <p class="hint">Trong 60 giây, xem từ tiếng Anh và nghĩa tiếng Việt.<br>Nghĩa đúng thì bấm ✅, sai thì bấm ❌.<br>Làm đúng càng nhiều càng tốt!</p>
+    <p class="hint">Kỷ lục: ${S.best.tf || 0} câu</p>
+    <div class="row"><button class="btn pri" id="start">▶ Bắt đầu</button></div></div>`;
+  $('#start').onclick = start;
+  function start(){
+    let score = 0, time = 60, cur = null, busy = false;
+    app.innerHTML = `<div class="ghead"><span>⚡ Đúng hay Sai</span><span class="timer" id="tm">⏱ 60</span><span>⭐ <b id="sc">0</b></span></div>
+      <div class="tfcard" id="tc"></div>
+      <div class="row"><button class="btn ok tfbtn" id="t">✅ Đúng</button><button class="btn bad tfbtn" id="f">❌ Sai</button></div>
+      <div class="fb" id="fb"></div>`;
+    const timer = setInterval(() => {
+      time--; $('#tm').textContent = '⏱ ' + time;
+      if (time <= 10) $('#tm').classList.add('low');
+      if (time <= 0) { clearInterval(timer); cleanup = null; finish('tf', score, null, 'Số câu trả lời đúng trong 60 giây'); }
+    }, 1000);
+    cleanup = () => clearInterval(timer);
+    function next(){
+      const w = W[Math.random()*W.length|0], truth = Math.random() < 0.5;
+      cur = { w, truth };
+      $('#tc').className = 'tfcard';
+      $('#tc').innerHTML = `<div class="en${w.en.length > 16 ? ' long' : ''}">${w.en}</div><div class="eq">=</div><div class="vi">${truth ? w.vi : distract(w, 1)[0].vi}</div>`;
+      $('#fb').textContent = ''; busy = false;
+    }
+    function ans(v){
+      if (busy) return; busy = true;
+      const right = v === cur.truth;
+      $('#tc').classList.add(right ? 'ok' : 'bad');
+      if (right) { score++; addStar(); sfx.good(); $('#sc').textContent = score; }
+      else { sfx.bad(); $('#fb').innerHTML = `<span class="no">${cur.w.en} = ${cur.w.vi}</span>`; }
+      setTimeout(next, right ? 450 : 1300);
+    }
+    $('#t').onclick = () => ans(true);
+    $('#f').onclick = () => ans(false);
+    next();
+  }
+}
+
+/* ---------- 7. Kiểm tra ---------- */
+function test(){
+  const N = 15;
+  const TP = UNIT.testGroups ? W.filter(w => UNIT.testGroups.includes(w.g)) : W;
+  const writePool = shuffle(TP.filter(w => w.en.length <= 14 && /^[A-Za-z' -]+$/.test(w.en))).slice(0, 5);
+  const rest = shuffle(TP.filter(w => !writePool.includes(w))).slice(0, N - 5);
+  const qs = shuffle([
+    ...writePool.map(w => ({ w, type:'write' })),
+    ...rest.slice(0, 5).map(w => ({ w, type:'listen' })),
+    ...rest.slice(5).map(w => ({ w, type:'choose' })),
+  ]);
+  let i = 0, score = 0;
+  const wrong = [];
+  function after(right, w){
+    if (right) { score++; sfx.good(); } else { sfx.bad(); wrong.push(w); }
+    $('#fb').innerHTML = `<div class="${right ? 'good' : 'no'}">${right ? praise() : 'Chưa đúng! Đáp án:'}</div>
+      <div style="margin-top:6px">${w.e} <b>${w.en}</b> = ${w.vi}</div>
+      <div class="row"><button class="btn pri" id="nx">${i === N - 1 ? 'Xem kết quả 🏁' : 'Tiếp theo ➜'}</button></div>`;
+    $('#nx').onclick = () => { i++; q(); };
+  }
+  function q(){
+    if (i >= N) return end();
+    const { w, type } = qs[i];
+    let done = false;
+    const head = ghead('📝 Kiểm tra', i, N, score);
+    if (type === 'write'){
+      app.innerHTML = `${head}
+        <div class="qbox" style="margin-top:12px"><p class="hint">✍️ Viết từ tiếng Anh</p><div class="e">${w.e}</div><div class="vi">${w.vi}</div>
+        <div class="row"><button class="btn snd" id="say">🔊 Nghe gợi ý</button></div></div>
+        <input class="winput" id="inp" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Gõ ở đây...">
+        <div class="row"><button class="btn blue" id="chk">Kiểm tra ✔</button></div>
+        <div class="fb" id="fb"></div>`;
+      $('#say').onclick = () => speak(w);
+      const submit = () => {
+        const v = $('#inp').value; if (done || !v.trim()) return; done = true;
+        $('#inp').blur(); $('#inp').disabled = true; speak(w); after(isRight(w, v), w);
+      };
+      $('#chk').onclick = submit;
+      $('#inp').onkeydown = e => { if (e.key === 'Enter') submit(); };
+      $('#inp').focus();
+    } else {
+      const listen = type === 'listen';
+      const opts = shuffle([w, ...distract(w, 3)]);
+      app.innerHTML = `${head}
+        ${listen
+          ? `<p class="hint">🎧 Nghe và chọn nghĩa đúng</p><div class="row"><button class="bigsnd" id="say">🔊</button></div>`
+          : `<div class="qbox" style="margin-top:12px"><p class="hint">Chọn từ tiếng Anh đúng</p><div class="vi">${w.vi}</div></div>`}
+        <div class="opts">${opts.map(o => `<button class="opt" data-en="${o.en}">${listen ? o.vi : o.en}</button>`).join('')}</div>
+        <div class="fb" id="fb"></div>`;
+      if (listen) { $('#say').onclick = () => speak(w); speak(w); }
+      $$('.opt').forEach(b => b.onclick = () => {
+        if (done) return; done = true;
+        const right = b.dataset.en === w.en;
+        b.classList.add(right ? 'ok' : 'bad');
+        if (!right) $$('.opt').find(x => x.dataset.en === w.en).classList.add('ok');
+        if (!listen) speak(w);
+        after(right, w);
+      });
+    }
+  }
+  function end(){
+    wrong.forEach(w => { S.known[w.en] = false; });
+    if (score) addStar(score);
+    save();
+    const extra = wrong.length ? `
+      <div class="wrongs"><p class="hint">Các từ cần ôn lại:</p>
+        ${wrong.map(w => `<button class="li" style="--gc:var(--bad)" data-en="${w.en}"><span class="e">${w.e}</span><span class="w"><b>${w.en}</b> <span>${tyS(w)}</span><div>${w.vi}</div></span><span class="s">🔊</span></button>`).join('')}
+      </div>
+      <div class="row"><button class="btn blue" id="rev">📖 Ôn các từ sai</button></div>` : '';
+    finish('test', score, N, null, extra);
+    $$('.wrongs .li').forEach(b => b.onclick = () => speak(byEn(b.dataset.en)));
+    if (wrong.length) $('#rev').onclick = () => { sfx.tap(); window.scrollTo(0, 0); learn(null, wrong); };
+  }
+  q();
+}
+
+/* ---------- 8. Ngữ pháp ---------- */
+function grammar(){
+  app.innerHTML = `<div class="gnote">${GRAMMAR.notes}</div>
+    <div class="row"><button class="btn pri" id="gq">✏️ Luyện tập ngữ pháp</button></div>`;
+  $$('.gex').forEach(p => p.onclick = () => speak(p.dataset.t));
+  $('#gq').onclick = () => { sfx.tap(); window.scrollTo(0, 0); grammarQuiz(); };
+}
+function grammarQuiz(){
+  const qs = shuffle(GRAMMAR.qs).slice(0, 10);
+  let i = 0, score = 0;
+  function q(){
+    if (i >= qs.length) return finish('grammar', score, qs.length);
+    const g = qs[i];
+    let done = false;
+    app.innerHTML = `${ghead('📘 Ngữ pháp', i, qs.length, score)}
+      <div class="qbox" style="margin-top:12px"><p class="hint">Chọn từ đúng điền vào chỗ trống</p><div class="gq">${g.q.replace('___', '<span class="blank">___</span>')}</div></div>
+      <div class="opts">${shuffle(g.o).map(o => `<button class="opt" data-o="${o}">${o}</button>`).join('')}</div>
+      <div class="fb" id="fb"></div>`;
+    $$('.opt').forEach(b => b.onclick = () => {
+      if (done) return; done = true;
+      const right = b.dataset.o === g.a;
+      if (right) { score++; addStar(); sfx.good(); b.classList.add('ok'); }
+      else { sfx.bad(); b.classList.add('bad'); $$('.opt').find(x => x.dataset.o === g.a).classList.add('ok'); }
+      const full = g.q.replace('___', g.a).replace(/ \(\w+\)$/, '').replace(/^.*→ /, '');
+      $('.blank').textContent = g.a; $('.blank').classList.add(right ? 'good' : 'no');
+      $('#fb').innerHTML = `<div class="${right ? 'good' : 'no'}">${right ? praise() : 'Chưa đúng rồi 💪'}</div>
+        <div style="margin-top:6px">💡 ${g.why}</div>
+        <div class="row"><button class="btn snd" id="say">🔊 Nghe câu</button><button class="btn pri" id="nx">Tiếp theo ➜</button></div>`;
+      $('#say').onclick = () => speak(full);
+      $('#nx').onclick = () => { i++; q(); };
+      speak(full);
+    });
+  }
+  q();
+}
+
+/* ---------- Khởi động ---------- */
+document.getElementById('starN').textContent = S.stars;
+home();
+</script>
+</body>
+</html>
